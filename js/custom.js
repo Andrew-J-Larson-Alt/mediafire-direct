@@ -39,8 +39,6 @@ let validationChecker = function(url, dlBtn, pInvalid) {
 
         return false;
       }
-// need to do url testing
-console.log(url);
     } else {
       // need to reset when no text is entered
       if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
@@ -82,7 +80,7 @@ console.log('AJAX FINISHED!!!!!!!!');
 
     // redirect to direct download if the download page was real (and not taken down)
     // TODO: ...
-  }
+  } else console.log('SOMEHOW BROKE???');
 
   // need 100 ms delay to get true value afterwards
 
