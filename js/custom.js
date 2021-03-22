@@ -1,5 +1,6 @@
 // Constants
 
+let corsProxy = 'https://thingproxy.freeboard.io/fetch/';
 let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 let validateDelayCheck = null;
 
@@ -53,13 +54,55 @@ let validationDelayChecker = function(url, dlBtn, pInvalid) {
   }, 100);
 };
 
+let attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP) {
+  // reset previous invalid page notice
+  if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
+
+  // in case we are running from download button
+  if (!url) url = document.getElementById('mediafire-url').value;
+  if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
+  if (!invalidUrlP) document.getElementById('invalid-url');
+  if (!invalidPageP) document.getElementById('invalid-page');
+
+  console.log(`Checking "${url}" for valid download page...`);
+  // try and get the mediafire page to get actual download link
+  await fetch(corsProxy+url).then(function (response) {
+	// The API call was successful!
+	return response.text();
+  }).then(function (html) {
+	// Convert the HTML string into a document object
+	let parser = new DOMParser();
+	let doc = parser.parseFromString(html, 'text/html');
+
+	// redirect to direct download if the download page was real (and not taken down)
+    let mfDlBtn = doc.getElementById('downloadButton');
+	if (mfDlBtn && mfDlBtn.href) {
+      console.log(`Redirecting to "${mfDlBtn.href}"...`);
+      window.location = mfDlBtn.href;
+      window.location = 'about:blank';
+      return true;
+    } else {
+      console.err(`No valid download button at "${url}".`);
+      if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+      return false;
+    }
+  }).catch(function (err) {
+    // There was an error
+    console.warn('Something went wrong.', err);
+    console.err(`No valid download button at "${url}".`);
+    if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+    return false;
+  });
+};
+
 // Wait for page to load
 window.addEventListener('load', function () {
   // Elements
 
-  let inputMediafireURL = document.querySelector('#mediafire-url');
-  let aMediafireDownloadBtn = document.querySelector('#mediafire-dl-btn');
-  let pInvalidURL = document.querySelector('#invalid-url');
+  let inputMediafireURL = document.getElementById('mediafire-url');
+  let aMediafireDownloadBtn = document.getElementById('mediafire-dl-btn');
+  let pInvalidURL = document.getElementById('invalid-url');
+  let pInvalidPage = document.getElementById('invalid-page');
     
   // Main
 
@@ -71,23 +114,8 @@ window.addEventListener('load', function () {
   }
   // run checker once on after parameter check
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL)) {
-    console.log(`Checking "${paramURL}" for valid download page...`);
-    // try and get the mediafire page to get actual download link
-    $.ajax({
-      url: 'https://cors-proxy.taskcluster.net/request',
-      method: 'POST',
-      contentType: 'application/json',
-      data: {
-        url: paramURL,
-      }
-    }).done(function(res) {
-      console.log(res);
-    });
-console.log('AJAX FINISHED!!!!!!!!');
-
-    // redirect to direct download if the download page was real (and not taken down)
-    // TODO: ...
-  } else console.log('SOMEHOW BROKE???');
+    attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage);
+  };
 
   // need 100 ms delay to get true value afterwards
 
