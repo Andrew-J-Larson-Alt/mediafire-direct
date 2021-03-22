@@ -61,8 +61,8 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
   if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
-  if (!invalidUrlP) document.getElementById('invalid-url');
-  if (!invalidPageP) document.getElementById('invalid-page');
+  if (!invalidUrlP) invalidUrlP = document.getElementById('invalid-url');
+  if (!invalidPageP) invalidPageP = document.getElementById('invalid-page');
 
   // reset previous invalid page notice
   if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
