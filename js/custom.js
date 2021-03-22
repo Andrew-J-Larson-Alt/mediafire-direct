@@ -67,6 +67,7 @@ window.addEventListener('load', function () {
   console.log(paramUrl);
   // run checker once on after parameter check
   if (validationChecker(paramUrl, aMediafireDownloadBtn, pInvalidURL)) {
+console.log('I DO GET HERE');
     // try and get the mediafire page to get actual download link
     $.ajax({
       url: 'http://cors-proxy.taskcluster.net/request',
