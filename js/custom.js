@@ -1,9 +1,8 @@
 // Constants
 
-let validMediafireFileDL = new RegExp('/https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm');
+let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
 // Wait for page to load
-
 window.addEventListener('load', function () {
   // Elements
 
@@ -14,7 +13,7 @@ window.addEventListener('load', function () {
   // Main
 
   document.querySelector('input').addEventListener('keyup', function() {
-    let urlText = inputMediafireURL.value;
+    let urlText = inputMediafireURL.value || '';
     let validatedURL = validMediafireFileDL.test(urlText);
 
     // Test if the new value is a valid link, to enable the download button
