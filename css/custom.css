@@ -13,7 +13,7 @@
 #mediafire-dl-btn {
   margin-left: 0 !important;
   font-size: 166% !important;
-  justify-content: center;
+  text-align: center;
 }
 
 #mediafire-dl-btn disabled {
