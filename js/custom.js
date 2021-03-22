@@ -73,7 +73,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
     let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
     
     // make sure the response was ok
-    if (response.ok) {
+    if (mediafirePageResponse.ok) {
       let data = await mediafirePageResponse.json();
       let html = data.contents;
 console.log(html);
