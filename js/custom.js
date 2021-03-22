@@ -39,6 +39,8 @@ let validationChecker = function(url, dlBtn, pInvalid) {
 
         return false;
       }
+// need to do url testing
+console.log(url);
     } else {
       // need to reset when no text is entered
       if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
@@ -60,17 +62,18 @@ window.addEventListener('load', function () {
   // Main
 
   // check URL parameters first
-  let qs = getQueryStringArray();
-  inputMediafireURL.value = qs.url || '';
+  let paramUrl = getQueryStringArray().url;
+  if (paramUrl) inputMediafireURL.value = paramUrl;
+  console.log(paramUrl);
   // run checker once on after parameter check
-  if (validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)) {
+  if (validationChecker(paramUrl, aMediafireDownloadBtn, pInvalidURL)) {
     // try and get the mediafire page to get actual download link
     $.ajax({
       url: 'http://cors-proxy.taskcluster.net/request',
       method: 'POST',
       contentType: 'application/json',
       data: {
-        url: inputMediafireURL.value,
+        url: paramUrl,
       }
     }).done(function(res) {
       console.log(res);
@@ -82,8 +85,8 @@ window.addEventListener('load', function () {
 
   // need 100 ms delay to get true value afterwards
 
-  // detect key presses
-  inputMediafireURL.addEventListener('keyup', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  // detect key presses (except enter)
+  inputMediafireURL.addEventListener('keyup', function() {if (!(e.key === 'Enter' || e.keyCode === 13)) validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
   // detect right-click actions
   inputMediafireURL.addEventListener('oncut', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
   inputMediafireURL.addEventListener('onpaste', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
