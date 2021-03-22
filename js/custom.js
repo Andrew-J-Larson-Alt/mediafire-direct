@@ -39,18 +39,7 @@ function downloadFile(filePath){
 }
 
 // need a delay from redirection so download can start
-//
-// DOING MORE TESTS
-window.onchange = function() {console.log('onchange')};
-window.onload = function() {console.log('onload')};
-window.onloadeddata = function() {console.log('onloadeddata')};
-window.onloadedmetadata = function() {console.log('onloadedmetadata')};
-window.onloadstart = function() {console.log('onloadstart')};
-window.onbeforeunload = function() {console.log('onbeforeunload')};
-window.onhashchange = function() {console.log('onhashchange')};
-window.onunload = function() {console.log('onunload')};
-//
-/*window.onbeforeload = function () { 
+window.onbeforeunload = function () { 
   // change to default newtab if we came from a 
   if (fromParameters) {
     // redirect to previous page if it exists
@@ -66,7 +55,7 @@ window.onunload = function() {console.log('onunload')};
       else window.location = 'about:blank';
     }
   }
-};*/
+};
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireFileDL.test(url || '');
