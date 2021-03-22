@@ -66,7 +66,7 @@ let attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP) {
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
-  await fetch(corsProxy+url).then(function (response) {
+  async await fetch(corsProxy+url).then(function (response) {
 	// The API call was successful!
 	return response.text();
   }).then(function (html) {
