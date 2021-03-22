@@ -3,6 +3,7 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /^https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
 const urlCheckInterval = 100; // ms
+const urlRedirectDelay = 100; // ms
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -42,20 +43,22 @@ function downloadFile(filePath){
 window.onbeforeunload = function () { 
   // change to default newtab if we came from a 
   if (fromParameters) {
-    console.log('I GET HERE!');
-    // redirect to previous page if it exists
-    if (window.history.length >= 2) window.history.back();
-    else {
-      // redirect to browser specfic newtab
-      if (isSafari) window.location = 'favorites://';
-      else if (isChrome) window.location = 'chrome://newtab';
-      else if (isOpera) window.location = 'opera://newtab';
-      else if (isEdgeChromium) window.location = 'edge://newtab';
-      else if (isEdge || isIE) window.location = 'about:tabs';
-      else if (isFirefox) window.location = 'about:newtab';
-      else window.location = 'about:blank';
-    }
-  } else console.log('SOMETHING IS WRONG');
+    // need a slight delay before going back
+    setTimeout(function() {
+      // redirect to previous page if it exists
+      if (window.history.length >= 2) window.history.back();
+      else {
+        // redirect to browser specfic newtab
+        if (isSafari) window.location = 'favorites://';
+        else if (isChrome) window.location = 'chrome://newtab';
+        else if (isOpera) window.location = 'opera://newtab';
+        else if (isEdgeChromium) window.location = 'edge://newtab';
+        else if (isEdge || isIE) window.location = 'about:tabs';
+        else if (isFirefox) window.location = 'about:newtab';
+        else window.location = 'about:blank';
+      }
+    }, urlRedirectDelay);
+  }
 };
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
