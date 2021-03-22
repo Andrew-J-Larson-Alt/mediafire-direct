@@ -42,6 +42,7 @@ function downloadFile(filePath){
 window.onbeforeunload = function () { 
   // change to default newtab if we came from a 
   if (fromParameters) {
+    console.log('I GET HERE!');
     // redirect to previous page if it exists
     if (window.history.length >= 2) window.history.back();
     else {
@@ -54,7 +55,7 @@ window.onbeforeunload = function () {
       else if (isFirefox) window.location = 'about:newtab';
       else window.location = 'about:blank';
     }
-  }
+  } else console.log('SOMETHING IS WRONG');
 };
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
