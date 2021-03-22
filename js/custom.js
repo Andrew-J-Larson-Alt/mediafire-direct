@@ -39,7 +39,7 @@ function downloadFile(filePath){
 }
 
 // need a delay from redirection so download can start
-window.onbeforeunload = function () { 
+window.onload = function () { 
   // change to default newtab if we came from a 
   if (fromParameters) {
     // redirect to previous page if it exists
