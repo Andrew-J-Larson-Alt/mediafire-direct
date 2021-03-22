@@ -15,6 +15,32 @@ function getQueryStringArray(){
 }
 
 let validationChecker = function(url, dlBtn, pInvalid) {
+  let validatedURL = validMediafireFileDL.test(url || '');
+
+  // Test if the new value is a valid link, to enable the download button
+  if (url) {
+    // check if we have valid url
+    if (validatedURL) {
+      if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
+      if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+
+      return true;
+    } else {
+      if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
+      if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
+
+      return false;
+    }
+  } else {
+    // need to reset when no text is entered
+    if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
+    if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+
+    return false;
+  }
+};
+
+let validationDelayChecker = function(url, dlBtn, pInvalid) {
   // clear previous timeout
   if (validateDelayCheck) {
     clearTimeout(validateDelayCheck);
@@ -23,29 +49,7 @@ let validationChecker = function(url, dlBtn, pInvalid) {
 
   // start new timeout
   validateDelayCheck = setTimeout(function() {
-    let validatedURL = validMediafireFileDL.test(url || '');
-
-    // Test if the new value is a valid link, to enable the download button
-    if (url) {
-      // check if we have valid url
-      if (validatedURL) {
-        if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
-        if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
-
-        return true;
-      } else {
-        if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
-        if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
-
-        return false;
-      }
-    } else {
-      // need to reset when no text is entered
-      if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
-      if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
-
-      return false;
-    }
+    validationChecker(url, dlbtn, pInvalid);
   }, 100);
 };
 
@@ -85,8 +89,8 @@ console.log('AJAX FINISHED!!!!!!!!');
   // need 100 ms delay to get true value afterwards
 
   // detect key presses (except enter)
-  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
   // detect right-click actions
-  inputMediafireURL.addEventListener('oncut', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
-  inputMediafireURL.addEventListener('onpaste', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
 });
