@@ -1,0 +1,16 @@
+#mediafire-url {
+  font-family: 'Roboto Slab', serif;
+  font-size: 1.5em;
+  color: white;
+  background: transparent;
+  border-radius: 9px;
+  border: 3px solid #ffbf00;
+  outline: none;
+  width: 100%;
+  padding: 0.5em;
+}
+
+#invalid-url:disabled {
+  opacity: 0.33
+  pointer-events: none;
+}
