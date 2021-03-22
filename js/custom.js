@@ -90,19 +90,19 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         window.location = 'about:blank';
         return true;
       } else {
-        console.err(`No valid download button at "${url}".`);
+        console.error(`No valid download button at "${url}".`);
         if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
         return false;
       }
     } else {
-      console.err(`No valid download button at "${url}".`);
+      console.error(`No valid download button at "${url}".`);
       if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
       return false;
     }
   } catch (err) {
     // There was an error
     console.warn('Something went wrong.', err);
-    console.err(`No valid download button at "${url}".`);
+    console.error(`No valid download button at "${url}".`);
     if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
     return false;
   }
