@@ -108,22 +108,25 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 	    // redirect to direct download if the download page was real (and not taken down)
         let mfDlBtn = doc.getElementById('downloadButton');
 	    if (mfDlBtn && mfDlBtn.href) {
-          console.log(`Redirecting to "${mfDlBtn.href}"...`);
+          console.log(`Downloading from "${mfDlBtn.href}"...`);
           downloadFile(mfDlBtn.href);
           // change to default newtab if we came from a 
           if (fromParameters) {
-            // redirect to previous page if it exists
-            if (window.history.length >= 2) window.history.back();
-            else {
-              // redirect to browser specfic newtab
-              if (isSafari) window.location = 'favorites://';
-              else if (isChrome) window.location = 'chrome://newtab';
-              else if (isOpera) window.location = 'opera://newtab';
-              else if (isEdgeChromium) window.location = 'edge://newtab';
-              else if (isEdge || isIE) window.location = 'about:tabs';
-              else if (isFirefox) window.location = 'about:newtab';
-              else window.location = 'about:blank';
-            }
+            // need a delay from redirection so download can start
+            setTimeout(function() {
+              // redirect to previous page if it exists
+              if (window.history.length >= 2) window.history.back();
+              else {
+                // redirect to browser specfic newtab
+                if (isSafari) window.location = 'favorites://';
+                else if (isChrome) window.location = 'chrome://newtab';
+                else if (isOpera) window.location = 'opera://newtab';
+                else if (isEdgeChromium) window.location = 'edge://newtab';
+                else if (isEdge || isIE) window.location = 'about:tabs';
+                else if (isFirefox) window.location = 'about:newtab';
+                else window.location = 'about:blank';
+              }
+            }, 500);
           }
           return true;
         }
