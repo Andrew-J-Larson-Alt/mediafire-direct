@@ -2,7 +2,7 @@
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
-const delayToDownload = 1000; // ms to wait for download, and then redirect
+const delayToDownload = 500; // ms to wait for download, and then redirect
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
