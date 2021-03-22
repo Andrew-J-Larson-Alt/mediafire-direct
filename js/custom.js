@@ -62,23 +62,23 @@ window.addEventListener('load', function () {
   // Main
 
   // check URL parameters first
-  let paramUrl = getQueryStringArray().url;
-  if (paramUrl) inputMediafireURL.value = paramUrl;
-  console.log(paramUrl);
+  let paramURL = getQueryStringArray().url;
+  if (paramURL) inputMediafireURL.value = paramURL;
   // run checker once on after parameter check
-  if (validationChecker(paramUrl, aMediafireDownloadBtn, pInvalidURL)) {
-console.log('I DO GET HERE');
+  if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL)) {
+    console.log(`Checking "${paramURL}" for valid download link...`);
     // try and get the mediafire page to get actual download link
     $.ajax({
       url: 'http://cors-proxy.taskcluster.net/request',
       method: 'POST',
       contentType: 'application/json',
       data: {
-        url: paramUrl,
+        url: paramURL,
       }
     }).done(function(res) {
       console.log(res);
     });
+console.log('AJAX FINISHED!!!!!!!!');
 
     // redirect to direct download if the download page was real (and not taken down)
     // TODO: ...
