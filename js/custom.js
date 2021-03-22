@@ -87,7 +87,7 @@ console.log('I DO GET HERE');
   // need 100 ms delay to get true value afterwards
 
   // detect key presses (except enter)
-  inputMediafireURL.addEventListener('keyup', function() {if (!(e.key === 'Enter' || e.keyCode === 13)) validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
   // detect right-click actions
   inputMediafireURL.addEventListener('oncut', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
   inputMediafireURL.addEventListener('onpaste', function() {validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
