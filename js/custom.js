@@ -4,8 +4,8 @@ let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]
 
 // Functions
 
-let validationChecker = function() {
-  let urlText = inputMediafireURL.value || '';
+let validationChecker = function(url) {
+  let urlText = url || '';
   let validatedURL = validMediafireFileDL.test(urlText);
 
   // Test if the new value is a valid link, to enable the download button
@@ -38,7 +38,7 @@ window.addEventListener('load', function () {
   // need 100 ms delay to get true value afterwards
 
   // detect key presses
-  document.querySelector('input').addEventListener('keyup', function() {setTimeout(validationChecker, 100)});
+  document.querySelector('input').addEventListener('keyup', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
   // detect right-click actions
-  document.querySelector('input').addEventListener('oncut', function() {setTimeout(validationChecker, 100)});
-  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(validationChecker, 100)});
+  document.querySelector('input').addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
+  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
