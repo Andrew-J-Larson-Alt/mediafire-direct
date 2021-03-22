@@ -15,6 +15,7 @@ body {
   font-size: 0.85em;
   color: gray;
   border: 3px solid #0077ff;
+  margin: 0.75019em 0 0.75019em 0;
 }
 
 #mediafire-url {
