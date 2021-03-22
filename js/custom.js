@@ -1,6 +1,6 @@
 // Constants
 
-const corsProxy = 'https://thingproxy.freeboard.io/fetch/';
+const corsProxy = 'http://www.whateverorigin.org/get?url=';
 const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
 // Variables
@@ -71,7 +71,9 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   // try and get the mediafire page to get actual download link
   try {
     let mediafirePageResponse = await fetch(corsProxy+url);
-    let html = await mediafirePageResponse.text();
+    let data = await mediafirePageResponse.json();
+
+    let html = data.content;
       
     // Convert the HTML string into a document object
 	let parser = new DOMParser();
