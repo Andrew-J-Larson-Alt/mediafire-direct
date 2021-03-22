@@ -76,7 +76,6 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
     if (mediafirePageResponse.ok) {
       let data = await mediafirePageResponse.json();
       let html = data.contents;
-console.log(html);
 
       // if we received a page
       if (html) {
