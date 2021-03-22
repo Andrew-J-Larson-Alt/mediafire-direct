@@ -6,6 +6,7 @@ const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-
 // Variables
 
 let validateDelayCheck = null;
+let fromParameters = false;
 
 // Functions
 
@@ -16,6 +17,13 @@ function getQueryStringArray(){
     let a = items[j].split('='); assoc[a[0]] = a[1]; 
   }
   return assoc;
+}
+
+function downloadFile(filePath){
+  let link=document.createElement('a');
+  link.href = filePath;
+  link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+  link.click();
 }
 
 let validationChecker = function(url, dlBtn, pInvalid) {
@@ -87,8 +95,8 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         let mfDlBtn = doc.getElementById('downloadButton');
 	    if (mfDlBtn && mfDlBtn.href) {
           console.log(`Redirecting to "${mfDlBtn.href}"...`);
-          window.location = mfDlBtn.href;
-          window.location = 'about:blank';
+          downloadFile(mfDlBtn.href);
+          if (fromParameters) window.close();
           return true;
         }
       }
@@ -121,6 +129,7 @@ window.addEventListener('load', function () {
   // check URL parameters first
   let paramURL = getQueryStringArray().url;
   if (paramURL) {
+    fromParameters = true;
     inputMediafireURL.value = paramURL;
     console.log(`Validating "${paramURL}" as Mediafire download link...`);
   }
