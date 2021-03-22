@@ -1,6 +1,6 @@
 // Constants
 
-const corsProxy = 'https://www.whateverorigin.org/get?url=';
+const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
 // Variables
@@ -70,22 +70,30 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
   try {
-    let mediafirePageResponse = await fetch(corsProxy+url);
-    let data = await mediafirePageResponse.json();
+    let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
+    
+    // make sure the response was ok
+    if (response.ok) {
+      let data = await mediafirePageResponse.json();
 
-    let html = data.content;
+      let html = data.content;
       
-    // Convert the HTML string into a document object
-	let parser = new DOMParser();
-	let doc = parser.parseFromString(html, 'text/html');
+      // Convert the HTML string into a document object
+	  let parser = new DOMParser();
+	  let doc = parser.parseFromString(html, 'text/html');
 
-	// redirect to direct download if the download page was real (and not taken down)
-    let mfDlBtn = doc.getElementById('downloadButton');
-	if (mfDlBtn && mfDlBtn.href) {
-      console.log(`Redirecting to "${mfDlBtn.href}"...`);
-      window.location = mfDlBtn.href;
-      window.location = 'about:blank';
-      return true;
+	  // redirect to direct download if the download page was real (and not taken down)
+      let mfDlBtn = doc.getElementById('downloadButton');
+	  if (mfDlBtn && mfDlBtn.href) {
+        console.log(`Redirecting to "${mfDlBtn.href}"...`);
+        window.location = mfDlBtn.href;
+        window.location = 'about:blank';
+        return true;
+      } else {
+        console.err(`No valid download button at "${url}".`);
+        if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+        return false;
+      }
     } else {
       console.err(`No valid download button at "${url}".`);
       if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
