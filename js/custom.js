@@ -1,7 +1,7 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
-const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
+const validMediafireFileDL = /^https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
 const delayToDownload = 500; // ms to wait for download, and then redirect
 
 // Browser Detection Variables
