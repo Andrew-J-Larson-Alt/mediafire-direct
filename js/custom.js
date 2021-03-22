@@ -1,6 +1,6 @@
 // Constants
 
-const corsProxy = 'http://www.whateverorigin.org/get?url=';
+const corsProxy = 'https://www.whateverorigin.org/get?url=';
 const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
 // Variables
