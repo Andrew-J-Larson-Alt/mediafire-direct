@@ -54,7 +54,7 @@ let validationDelayChecker = function(url, dlBtn, pInvalid) {
   }, 100);
 };
 
-let attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP) {
+let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP) {
   // reset previous invalid page notice
   if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
 
@@ -66,7 +66,7 @@ let attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP) {
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
-  async await fetch(corsProxy+url).then(function (response) {
+  await fetch(corsProxy+url).then(function (response) {
 	// The API call was successful!
 	return response.text();
   }).then(function (html) {
