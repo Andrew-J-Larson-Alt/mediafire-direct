@@ -187,6 +187,6 @@ window.addEventListener('load', function () {
   // detect key presses (except control keys)
   inputMediafireURL.addEventListener('keyup', function(e) {if (e.which == 8 || e.which == 46 || (e.which > 47 && e.which < 58) || e.which == 32 || e.which == 13 || (e.which > 64 && e.which < 91) || (e.which > 95 && e.which < 112) || (e.which > 185 && e.which < 193) || (e.which > 218 && e.which < 223)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   // detect right-click actions
-  inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
-  inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
+  inputMediafireURL.addEventListener('cut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
+  inputMediafireURL.addEventListener('paste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
 });
