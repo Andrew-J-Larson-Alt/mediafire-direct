@@ -75,30 +75,29 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
     // make sure the response was ok
     if (response.ok) {
       let data = await mediafirePageResponse.json();
-
       let html = data.contents;
+        
+      // if we received a page
+      if (html) {
+        // Convert the HTML string into a document object
+	    let parser = new DOMParser();
+	    let doc = parser.parseFromString(html, 'text/html');
 
-      // Convert the HTML string into a document object
-	  let parser = new DOMParser();
-	  let doc = parser.parseFromString(html, 'text/html');
-
-	  // redirect to direct download if the download page was real (and not taken down)
-      let mfDlBtn = doc.getElementById('downloadButton');
-	  if (mfDlBtn && mfDlBtn.href) {
-        console.log(`Redirecting to "${mfDlBtn.href}"...`);
-        window.location = mfDlBtn.href;
-        window.location = 'about:blank';
-        return true;
-      } else {
-        console.error(`No valid download button at "${url}".`);
-        if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
-        return false;
+	    // redirect to direct download if the download page was real (and not taken down)
+        let mfDlBtn = doc.getElementById('downloadButton');
+	    if (mfDlBtn && mfDlBtn.href) {
+          console.log(`Redirecting to "${mfDlBtn.href}"...`);
+          window.location = mfDlBtn.href;
+          window.location = 'about:blank';
+          return true;
+        }
       }
-    } else {
-      console.error(`No valid download button at "${url}".`);
-      if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
-      return false;
     }
+
+    // all else should produce an error
+    console.error(`No valid download button at "${url}".`);
+    if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+    return false;
   } catch (err) {
     // There was an error
     console.warn('Something went wrong.', err);
