@@ -2,18 +2,10 @@
 
 let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
-// Wait for page to load
-window.addEventListener('load', function () {
-  // Elements
+// Functions
 
-  let inputMediafireURL = document.querySelector('#mediafire-url');
-  let aMediafireDownloadBtn = document.querySelector('#mediafire-dl-btn');
-  let pInvalidURL = document.querySelector('#invalid-url');
-
-  // Main
-
-  document.querySelector('input').addEventListener('keyup', function() {
-    let urlText = inputMediafireURL.value || '';
+let validationChecker = function() {
+  let urlText = inputMediafireURL.value || '';
     let validatedURL = validMediafireFileDL.test(urlText);
 
     // Test if the new value is a valid link, to enable the download button
@@ -32,4 +24,19 @@ window.addEventListener('load', function () {
       if (!pInvalidURL.classList.contains('hide')) pInvalidURL.classList.add('hide');
     }
   });
-});
+};
+
+// Wait for page to load
+window.addEventListener('load', function () {
+  // Elements
+
+  let inputMediafireURL = document.querySelector('#mediafire-url');
+  let aMediafireDownloadBtn = document.querySelector('#mediafire-dl-btn');
+  let pInvalidURL = document.querySelector('#invalid-url');
+    
+  // Main
+
+  // detect key presses
+  document.querySelector('input').addEventListener('keyup', validationChecker);
+  // detect right-click pastes
+  document.querySelector('input').addEventListener('onpaste', validationChecker);
