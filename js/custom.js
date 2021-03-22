@@ -4,24 +4,23 @@ let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]
 
 // Functions
 
-let validationChecker = function(url) {
-  let urlText = url || '';
-  let validatedURL = validMediafireFileDL.test(urlText);
+let validationChecker = function(url, dlBtn, pInvalid) {
+  let validatedURL = validMediafireFileDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
-  if (urlText) {
+  if (url) {
     // check if we have valid url
     if (validatedURL) {
-      if (aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.remove('disable');
-      if (!pInvalidURL.classList.contains('hide')) pInvalidURL.classList.add('hide');
+      if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
+      if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
     } else {
-      if (!aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.add('disable');
-      if (pInvalidURL.classList.contains('hide')) pInvalidURL.classList.remove('hide');
+      if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
+      if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
       }
   } else {
     // need to reset when no text is entered
-    if (!aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.add('disable');
-    if (!pInvalidURL.classList.contains('hide')) pInvalidURL.classList.add('hide');
+    if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
+    if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
   }
 };
 
@@ -38,7 +37,7 @@ window.addEventListener('load', function () {
   // need 100 ms delay to get true value afterwards
 
   // detect key presses
-  document.querySelector('input').addEventListener('keyup', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
+  document.querySelector('input').addEventListener('keyup', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
   // detect right-click actions
-  document.querySelector('input').addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
-  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value)}, 100)});
+  document.querySelector('input').addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
+  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
