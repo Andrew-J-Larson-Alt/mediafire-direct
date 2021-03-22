@@ -186,7 +186,7 @@ window.addEventListener('load', function () {
   // need 100 ms delay to get true value afterwards
 
   // detect key presses (except control keys)
-  inputMediafireURL.addEventListener('keyup', function(e) {if ((e.keycode > 47 && e.keycode < 58)   || e.keycode == 32 || e.keycode == 13 || (e.keycode > 64 && e.keycode < 91) || (e.keycode > 95 && e.keycode < 112) || (e.keycode > 185 && e.keycode < 193) || (e.keycode > 218 && e.keycode < 223)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
+  inputMediafireURL.addEventListener('keyup', function(e) {if ((e.which > 47 && e.which < 58) || e.which == 32 || e.which == 13 || (e.which > 64 && e.which < 91) || (e.which > 95 && e.which < 112) || (e.which > 185 && e.which < 193) || (e.which > 218 && e.which < 223)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   // detect right-click actions
   inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
