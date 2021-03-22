@@ -17,7 +17,11 @@
   justify-content: center;
 }
 
-#invalid-url:disabled {
+#mediafire-dl-btn:disabled {
   opacity: 0.33;
   pointer-events: none;
+}
+
+#invalid-url:disabled {
+  display: none;
 }
