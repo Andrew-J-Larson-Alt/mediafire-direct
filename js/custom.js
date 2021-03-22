@@ -58,14 +58,14 @@ let validationDelayChecker = function(url, dlBtn, pInvalid) {
 };
 
 let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP) {
-  // reset previous invalid page notice
-  if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
-
-  // in case we are running from download button
+  // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
   if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
   if (!invalidUrlP) document.getElementById('invalid-url');
   if (!invalidPageP) document.getElementById('invalid-page');
+
+  // reset previous invalid page notice
+  if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
