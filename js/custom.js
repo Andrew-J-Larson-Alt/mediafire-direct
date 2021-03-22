@@ -36,8 +36,10 @@ window.addEventListener('load', function () {
     
   // Main
 
+  // need 100 ms delay to get true value afterwards
+
   // detect key presses
-  document.querySelector('input').addEventListener('keyup', validationChecker);
+  document.querySelector('input').addEventListener('keyup', function() {setTimeout(validationChecker, 100)});
   // detect right-click actions
-  document.querySelector('input').addEventListener('oncut', validationChecker);
-  document.querySelector('input').addEventListener('onpaste', validationChecker);
+  document.querySelector('input').addEventListener('oncut', function() {setTimeout(validationChecker, 100)});
+  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(validationChecker, 100)});
