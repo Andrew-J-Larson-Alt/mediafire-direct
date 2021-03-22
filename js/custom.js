@@ -185,8 +185,8 @@ window.addEventListener('load', function () {
 
   // need 100 ms delay to get true value afterwards
 
-  // detect key presses (except enter)
-  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
+  // detect key presses (except control keys)
+  inputMediafireURL.addEventListener('keyup', function(e) {if ((e.keycode > 47 && e.keycode < 58)   || e.keycode == 32 || e.keycode == 13 || (e.keycode > 64 && e.keycode < 91) || (e.keycode > 95 && e.keycode < 112) || (e.keycode > 185 && e.keycode < 193) || (e.keycode > 218 && e.keycode < 223)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   // detect right-click actions
   inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
