@@ -2,7 +2,7 @@
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /^https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
-const delayToDownload = 500; // ms to wait for download, and then redirect
+const urlCheckInterval = 100; // ms
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -18,6 +18,7 @@ var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 let validateDelayCheck = null;
 let fromParameters = false;
+let previousUrlValue = '';
 
 // Functions
 
@@ -36,6 +37,25 @@ function downloadFile(filePath){
   link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
   link.click();
 }
+
+// need a delay from redirection so download can start
+window.onbeforeunload = function () { 
+  // change to default newtab if we came from a 
+  if (fromParameters) {
+    // redirect to previous page if it exists
+    if (window.history.length >= 2) window.history.back();
+    else {
+      // redirect to browser specfic newtab
+      if (isSafari) window.location = 'favorites://';
+      else if (isChrome) window.location = 'chrome://newtab';
+      else if (isOpera) window.location = 'opera://newtab';
+      else if (isEdgeChromium) window.location = 'edge://newtab';
+      else if (isEdge || isIE) window.location = 'about:tabs';
+      else if (isFirefox) window.location = 'about:newtab';
+      else window.location = 'about:blank';
+    }
+  }
+};
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireFileDL.test(url || '');
@@ -115,24 +135,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 	    if (mfDlBtn && mfDlBtn.href) {
           console.log(`Downloading from "${mfDlBtn.href}"...`);
           downloadFile(mfDlBtn.href);
-          // change to default newtab if we came from a 
-          if (fromParameters) {
-            // need a delay from redirection so download can start
-            window.onbeforeunload = function () { //setTimeout(function() {
-              // redirect to previous page if it exists
-              if (window.history.length >= 2) window.history.back();
-              else {
-                // redirect to browser specfic newtab
-                if (isSafari) window.location = 'favorites://';
-                else if (isChrome) window.location = 'chrome://newtab';
-                else if (isOpera) window.location = 'opera://newtab';
-                else if (isEdgeChromium) window.location = 'edge://newtab';
-                else if (isEdge || isIE) window.location = 'about:tabs';
-                else if (isFirefox) window.location = 'about:newtab';
-                else window.location = 'about:blank';
-              }
-            };//, delayToDownload);
-          }
+
           return true;
         }
       }
@@ -185,7 +188,9 @@ window.addEventListener('load', function () {
   // need 100 ms delay to get true value afterwards
 
   // detect key presses (except control keys)
-  inputMediafireURL.addEventListener('keypress', function(e) {if (e.which == 8 || e.which == 46 || (e.which > 47 && e.which < 58) || e.which == 32 || e.which == 13 || (e.which > 64 && e.which < 91) || (e.which > 95 && e.which < 112) || (e.which > 185 && e.which < 193) || (e.which > 218 && e.which < 223)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
+  setInterval(function() {
+    if (previousUrlValue != inputMediafireURL.value) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)}, urlCheckInterval);
+  }
   // detect right-click actions
   inputMediafireURL.addEventListener('cut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   inputMediafireURL.addEventListener('paste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
