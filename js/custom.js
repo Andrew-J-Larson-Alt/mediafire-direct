@@ -38,5 +38,6 @@ window.addEventListener('load', function () {
 
   // detect key presses
   document.querySelector('input').addEventListener('keyup', validationChecker);
-  // detect right-click pastes
+  // detect right-click actions
+  document.querySelector('input').addEventListener('oncut', validationChecker);
   document.querySelector('input').addEventListener('onpaste', validationChecker);
