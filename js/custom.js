@@ -21,7 +21,7 @@ window.addEventListener('load', function () {
       // check if we have valid url
       if (validatedURL) {
         if (aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.remove('disable');
-        if (pInvalidURL.classList.contains('hide')) pInvalidURL.classList.remove('hide');
+        if (!pInvalidURL.classList.contains('hide')) pInvalidURL.classList.add('hide');
       } else {
         if (!aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.add('disable');
         if (pInvalidURL.classList.contains('hide')) pInvalidURL.classList.remove('hide');
