@@ -24,7 +24,7 @@ document.querySelector('input').addEventListener('change', function() {
       if (!aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.add('disable');
       if (pInvalidURL.classList.contains('hide')) pInvalidURL.classList.remove('hide');
     }
-  } else if {
+  } else {
     // need to reset when no text is entered
     if (!aMediafireDownloadBtn.classList.contains('disable')) aMediafireDownloadBtn.classList.add('disable');
     if (!pInvalidURL.classList.contains('hide')) pInvalidURL.classList.add('hide');
