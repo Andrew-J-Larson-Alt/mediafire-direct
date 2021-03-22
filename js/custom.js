@@ -108,14 +108,18 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           downloadFile(mfDlBtn.href);
           // change to default newtab if we came from a 
           if (fromParameters) {
-            // redirect to browser specfic newtab
-            if (isSafari) window.location = 'favorites://';
-            else if (isChrome) window.location = 'chrome://newtab';
-            else if (isOpera) window.location = 'opera://newtab';
-            else if (isEdgeChromium) window.location = 'edge://newtab';
-            else if (isEdge || isIE) window.location = 'about:tabs';
-            else if (isFirefox) window.location = 'about:newtab';
-            else window.location = 'about:blank';
+            // redirect to previous page if it exists
+            if (window.history.length >= 2) window.history.back();
+            else {
+              // redirect to browser specfic newtab
+              if (isSafari) window.location = 'favorites://';
+              else if (isChrome) window.location = 'chrome://newtab';
+              else if (isOpera) window.location = 'opera://newtab';
+              else if (isEdgeChromium) window.location = 'edge://newtab';
+              else if (isEdge || isIE) window.location = 'about:tabs';
+              else if (isFirefox) window.location = 'about:newtab';
+              else window.location = 'about:blank';
+            }
           }
           return true;
         }
