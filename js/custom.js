@@ -1,7 +1,10 @@
 // Constants
 
-let corsProxy = 'https://thingproxy.freeboard.io/fetch/';
-let validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
+const corsProxy = 'https://thingproxy.freeboard.io/fetch/';
+const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
+
+// Variables
+
 let validateDelayCheck = null;
 
 // Functions
@@ -66,11 +69,11 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
-  await fetch(corsProxy+url).then(function (response) {
-	// The API call was successful!
-	return response.text();
-  }).then(function (html) {
-	// Convert the HTML string into a document object
+  try {
+    let mediafirePageResponse = await fetch(corsProxy+url);
+    let html = await mediafirePageResponse.text();
+      
+    // Convert the HTML string into a document object
 	let parser = new DOMParser();
 	let doc = parser.parseFromString(html, 'text/html');
 
@@ -86,13 +89,13 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
       if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
       return false;
     }
-  }).catch(function (err) {
+  } catch (err) {
     // There was an error
     console.warn('Something went wrong.', err);
     console.err(`No valid download button at "${url}".`);
     if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
     return false;
-  });
+  }
 };
 
 // Wait for page to load
