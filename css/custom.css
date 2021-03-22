@@ -4,7 +4,6 @@ body {
 
 #mediafire-url, #mediafire-new-url {
   font-family: 'Roboto Slab', serif;
-  font-size: 1.5em;
   background: transparent;
   border-radius: 9px;
   outline: none;
@@ -13,11 +12,13 @@ body {
 }
 
 #mediafire-new-url {
+  font-size: 0.85em;
   color: gray;
   border: 3px solid #0077ff;
 }
 
 #mediafire-url {
+  font-size: 1.5em;
   color: white;
   border: 3px solid #ffbf00;
 }
