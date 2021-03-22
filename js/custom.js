@@ -65,10 +65,13 @@ window.addEventListener('load', function () {
 
   // check URL parameters first
   let paramURL = getQueryStringArray().url;
-  if (paramURL) inputMediafireURL.value = paramURL;
+  if (paramURL) {
+    inputMediafireURL.value = paramURL;
+    console.log(`Validating "${paramURL}" as Mediafire download link...`);
+  }
   // run checker once on after parameter check
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL)) {
-    console.log(`Checking "${paramURL}" for valid download link...`);
+    console.log(`Checking "${paramURL}" for valid download page...`);
     // try and get the mediafire page to get actual download link
     $.ajax({
       url: 'http://cors-proxy.taskcluster.net/request',
