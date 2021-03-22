@@ -36,7 +36,7 @@ function downloadFile(filePath){
   link.click();
 }
 
-let validationChecker = function(url, dlBtn, pInvalid) {
+let validationChecker = function(url, dlBtn, pInvalid, spanMfNewURL) {
   let validatedURL = validMediafireFileDL.test(url || '');
 
   // Test if the new value is a valid link, to enable the download button
@@ -45,11 +45,13 @@ let validationChecker = function(url, dlBtn, pInvalid) {
     if (validatedURL) {
       if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
       if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+      spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?url=' + url;
 
       return true;
     } else {
       if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
       if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
+      spanMfNewURL.innerText = '';
 
       return false;
     }
@@ -57,12 +59,13 @@ let validationChecker = function(url, dlBtn, pInvalid) {
     // need to reset when no text is entered
     if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
     if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+    spanMfNewURL.innerText = '';
 
     return false;
   }
 };
 
-let validationDelayChecker = function(url, dlBtn, pInvalid) {
+let validationDelayChecker = function(url, dlBtn, pInvalid, mediafireNewUrlSpan) {
   // clear previous timeout
   if (validateDelayCheck) {
     clearTimeout(validateDelayCheck);
@@ -71,13 +74,14 @@ let validationDelayChecker = function(url, dlBtn, pInvalid) {
 
   // start new timeout
   validateDelayCheck = setTimeout(function() {
-    validationChecker(url, dlBtn, pInvalid);
+    validationChecker(url, dlBtn, pInvalid, mediafireNewUrlSpan);
   }, 100);
 };
 
-let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP) {
+let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, mediafireNewUrlSpan) {
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
+  if (!mediafireNewUrlSpan) mediafireNewUrlSpan = document.getElementById('mediafire-new-url');
   if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
   if (!invalidUrlP) invalidUrlP = document.getElementById('invalid-url');
   if (!invalidPageP) invalidPageP = document.getElementById('invalid-page');
@@ -129,12 +133,16 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
     // all else should produce an error
     console.error(`No valid download button at "${url}".`);
     if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+    mediafireNewUrlSpan.innerText = '';
+
     return false;
   } catch (err) {
     // There was an error
     console.warn('Something went wrong.', err);
     console.error(`No valid download button at "${url}".`);
     if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+    mediafireNewUrlSpan.innerText = '';
+
     return false;
   }
 };
@@ -144,6 +152,7 @@ window.addEventListener('load', function () {
   // Elements
 
   let inputMediafireURL = document.getElementById('mediafire-url');
+  let spanMediafireNewURL = document.getElementById('mediafire-new-url');
   let aMediafireDownloadBtn = document.getElementById('mediafire-dl-btn');
   let pInvalidURL = document.getElementById('invalid-url');
   let pInvalidPage = document.getElementById('invalid-page');
@@ -158,15 +167,15 @@ window.addEventListener('load', function () {
     console.log(`Validating "${paramURL}" as Mediafire download link...`);
   }
   // run checker once on after parameter check
-  if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL)) {
-    attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage);
+  if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, spanMediafireNewURL)) {
+    attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, spanMediafireNewURL);
   };
 
   // need 100 ms delay to get true value afterwards
 
   // detect key presses (except enter)
-  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('keyup', function(e) {if (!(e.key === 'Enter' || e.keyCode === 13)) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, spanMediafireNewURL)});
   // detect right-click actions
-  inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
-  inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL)});
+  inputMediafireURL.addEventListener('oncut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, spanMediafireNewURL)});
+  inputMediafireURL.addEventListener('onpaste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, spanMediafireNewURL)});
 });
