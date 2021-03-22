@@ -37,7 +37,7 @@ window.addEventListener('load', function () {
   // need 100 ms delay to get true value afterwards
 
   // detect key presses
-  document.querySelector('input').addEventListener('keyup', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
+  inputMediafireURL.addEventListener('keyup', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
   // detect right-click actions
-  document.querySelector('input').addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
-  document.querySelector('input').addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
+  inputMediafireURL.addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
+  inputMediafireURL.addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
