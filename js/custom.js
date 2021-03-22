@@ -3,6 +3,16 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file/gm;
 
+// Browser Detection Variables
+var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+var isFirefox = typeof InstallTrigger !== 'undefined';
+var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+var isIE = /*@cc_on!@*/false || !!document.documentMode;
+var isEdge = !isIE && !!window.StyleMedia;
+var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+var isBlink = (isChrome || isOpera) && !!window.CSS;
+
 // Variables
 
 let validateDelayCheck = null;
@@ -96,7 +106,17 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 	    if (mfDlBtn && mfDlBtn.href) {
           console.log(`Redirecting to "${mfDlBtn.href}"...`);
           downloadFile(mfDlBtn.href);
-          if (fromParameters) window.close();
+          // change to default newtab if we came from a 
+          if (fromParameters) {
+            // redirect to browser specfic newtab
+            if (isSafari) window.location = 'favorites://';
+            else if (isChrome) window.location = 'chrome://newtab';
+            else if (isOpera) window.location = 'opera://newtab';
+            else if (isEdgeChromium) window.location = 'edge://newtab';
+            else if (isEdge || isIE) window.location = 'about:tabs';
+            else if (isFirefox) window.location = 'about:newtab';
+            else window.location = 'about:blank';
+          }
           return true;
         }
       }
