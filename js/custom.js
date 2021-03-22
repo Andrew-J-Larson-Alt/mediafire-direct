@@ -13,7 +13,7 @@ window.addEventListener('load', function () {
 
   // Main
 
-  document.querySelector('input').addEventListener('change', function() {
+  document.querySelector('input').addEventListener('keyup', function() {
     let urlText = inputMediafireURL.value;
     let validatedURL = validMediafireFileDL.test(urlText);
 
