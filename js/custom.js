@@ -74,7 +74,7 @@ window.addEventListener('load', function () {
     console.log(`Checking "${paramURL}" for valid download page...`);
     // try and get the mediafire page to get actual download link
     $.ajax({
-      url: 'http://cors-proxy.taskcluster.net/request',
+      url: 'https://cors-proxy.taskcluster.net/request',
       method: 'POST',
       contentType: 'application/json',
       data: {
