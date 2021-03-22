@@ -41,3 +41,4 @@ window.addEventListener('load', function () {
   // detect right-click actions
   inputMediafireURL.addEventListener('oncut', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
   inputMediafireURL.addEventListener('onpaste', function() {setTimeout(function() {validationChecker(inputMediafireURL.value || '', aMediafireDownloadBtn, pInvalidURL)}, 100)});
+}
