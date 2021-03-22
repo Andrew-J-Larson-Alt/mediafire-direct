@@ -16,11 +16,11 @@
   text-align: center;
 }
 
-#mediafire-dl-btn disabled {
+.disable {
   opacity: 0.33;
   pointer-events: none;
 }
 
-#invalid-url disabled {
+.hide {
   display: none;
 }
