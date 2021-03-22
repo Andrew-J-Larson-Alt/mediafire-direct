@@ -50,7 +50,7 @@ let validationDelayChecker = function(url, dlBtn, pInvalid) {
 
   // start new timeout
   validateDelayCheck = setTimeout(function() {
-    validationChecker(url, dlbtn, pInvalid);
+    validationChecker(url, dlBtn, pInvalid);
   }, 100);
 };
 
