@@ -189,8 +189,11 @@ window.addEventListener('load', function () {
 
   // detect key presses (except control keys)
   setInterval(function() {
-    if (previousUrlValue != inputMediafireURL.value) validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)}, urlCheckInterval);
-  }
+    if (previousUrlValue != inputMediafireURL.value) {
+      validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+      previousUrlValue = inputMediafireURL.value;
+    }
+  }, urlCheckInterval);
   // detect right-click actions
   inputMediafireURL.addEventListener('cut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
   inputMediafireURL.addEventListener('paste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
