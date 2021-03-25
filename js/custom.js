@@ -167,7 +167,7 @@ let restartKeypressed = function() {
     clearTimeout(keypressedTimeout);
     keypressedTimeout = null;
   }
-  let keypressedTimeout = setTimeout(function() {keypressed = false;}, keypressedDelay);
+  keypressedTimeout = setTimeout(function() {keypressed = false;}, keypressedDelay);
 };
 
 // Wait for page to load
