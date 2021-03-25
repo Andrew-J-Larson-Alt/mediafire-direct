@@ -67,8 +67,6 @@ let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
 
   // Test if the new value is a valid link, to enable the download button
   if (url) {
-    console.log(url); // DOING TESTS
-    console.log(validatedURL); // DOING TESTS
     // check if we have valid url
     if (validatedURL) {
       if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
@@ -193,13 +191,8 @@ window.addEventListener('load', function () {
   };
 
   // detect any changes to url value
-  setInterval(function() {
-    // needs to be captured before checking since it changes fast
-    let currentUrl = inputMediafireURL.value;
-    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
-        previousUrlValue = currentUrl;
-  }, urlCheckInterval);
-
-  // DOING OBSERVER TESTING
-  observer.observe(inputMediafireURL, { attributes: true });
+  observer.observe(inputMediafireURL, {
+    subtree: true,
+    characterData: true
+  });
 });
