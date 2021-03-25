@@ -3,7 +3,6 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?\/file$/m;
 const checkHTTP = /^https?:\/\//m;
-const urlCheckInterval = 100; // ms
 const urlRedirectDelay = 500; // ms
 
 // Browser Detection Variables
