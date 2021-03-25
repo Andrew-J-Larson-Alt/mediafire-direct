@@ -52,6 +52,15 @@ body {
   margin: 0 0.125em;
 }
 
+.optional-key {
+  border-radius: 2px;
+  border: 2px solid yellow;
+}
+.required-key {
+  border-radius: 2px;
+  border: 2px solid green;
+}
+
 .subtle {
   color: dimgray;
 }
