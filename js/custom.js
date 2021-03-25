@@ -134,12 +134,12 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
       // if we received a page
       if (html) {
         // Convert the HTML string into a document object
-	    let parser = new DOMParser();
-	    let doc = parser.parseFromString(html, 'text/html');
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(html, 'text/html');
 
-	    // redirect to direct download if the download page was real (and not taken down)
+        // redirect to direct download if the download page was real (and not taken down)
         let mfDlBtn = doc.getElementById('downloadButton');
-	    if (mfDlBtn && mfDlBtn.href) {
+        if (mfDlBtn && mfDlBtn.href) {
           let dlUrl = mfDlBtn.href;
 
           console.log(`Downloading from "${dlUrl}"...`);
