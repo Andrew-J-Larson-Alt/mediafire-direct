@@ -63,10 +63,11 @@ window.onbeforeunload = function () {
 };
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
-  let validatedURL = validMediafireFileDL.test(typeof(url) === null ? '' : url);
+  let validatedURL = validMediafireFileDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
   if (url) {
+    console.log(url); // DOING TESTS
     console.log(validatedURL); // DOING TESTS
     // check if we have valid url
     if (validatedURL) {
