@@ -73,7 +73,7 @@ let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
     if (validatedURL) {
       if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
       if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
-      spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?url=' + url;
+      spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?dl=' + url;
       if (containedNewUrl.classList.contains('hide')) containedNewUrl.classList.remove('hide');
 
       return true;
@@ -175,7 +175,7 @@ window.addEventListener('load', function () {
   // Main
 
   // check URL parameters first
-  let paramURL = getQueryStringArray().url;
+  let paramURL = getQueryStringArray().dl;
   if (paramURL) {
     fromParameters = true;
     inputMediafireURL.value = paramURL;
