@@ -1,7 +1,8 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
-const validMediafireFileDL = /^https?:\/\/(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
+const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
+const checkHTTP = /^https?:\/\//gm;
 const urlCheckInterval = 100; // ms
 const urlRedirectDelay = 500; // ms
 
@@ -117,6 +118,11 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
   // reset previous invalid page notice
   if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
+
+  // modify the link to work with proxy
+  url = url.replace('http://', 'https://'); // not required, but makes them secure
+  // if the link doesn't have http(s), it needs to be appended
+  if (!checkHTTP.test(url)) url = 'https://' + url;
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
