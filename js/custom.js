@@ -67,7 +67,7 @@ function downloadFileBegin(filePath) {
   let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
   iframeDivDL.innerHTML = iframeFileDL;
 
-  iframeDivDL.getElementById('iframeFileDL').src = filePath;
+  document.getElementById('iframeFileDL').src = filePath;
 }
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
