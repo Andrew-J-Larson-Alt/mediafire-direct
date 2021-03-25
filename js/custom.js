@@ -205,7 +205,7 @@ window.addEventListener('load', function () {
     let currentUrl = inputMediafireURL.value;
   
     // need to ignore keydown or keypress before checking again
-    if (... | ...) {
+    if (!keypressed) {
       if (previousUrlValue != currentUrl) {
       validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
       previousUrlValue = currentUrl;
