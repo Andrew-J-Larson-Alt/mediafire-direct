@@ -184,9 +184,11 @@ window.addEventListener('load', function () {
 
   // detect any changes to url value
   setInterval(function() {
-    if (previousUrlValue != inputMediafireURL.value) {
-      validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
-      previousUrlValue = inputMediafireURL.value;
+    // needs to be captured before checking since it changes fast
+    let currentUrl = inputMediafireURL.value;
+    if (previousUrlValue != currentUrl) {
+      validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+      previousUrlValue = currentUrl;
     }
   }, urlCheckInterval);
 });
