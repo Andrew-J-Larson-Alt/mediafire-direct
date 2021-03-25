@@ -1,6 +1,7 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
+const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+;
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
 const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
 const checkHTTP = /^https?:\/\//m;
@@ -63,7 +64,7 @@ window.onbeforeunload = function () {
 };
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
-  let validatedURL = validMediafireFileDL.test(url) || validMediafireViewDL.test(url);
+  let validatedURL = validMediafireShortDL.test(url) || validMediafireFileDL.test(url) || validMediafireViewDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
   if (url) {
