@@ -53,10 +53,12 @@ body {
 }
 
 .optional-key {
+  font-family: monospace;
   border-radius: 2px;
   border: 2px solid yellow;
 }
 .required-key {
+  font-family: monospace;
   border-radius: 2px;
   border: 2px solid green;
 }
