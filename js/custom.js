@@ -6,7 +6,6 @@ const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0
 const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
 const checkHTTP = /^https?:\/\//m;
-const urlRedirectDelay = 500; // ms
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -26,7 +25,7 @@ let previousUrlValue = '';
 
 // Functions
 
-function getQueryStringArray(){
+function getQueryStringArray() {
   let assoc=[];
   let items = window.location.search.substring(1).split('&');
   for(let j = 0; j < items.length; j++) {
@@ -35,34 +34,41 @@ function getQueryStringArray(){
   return assoc;
 }
 
-function downloadFile(filePath){
+// normal way to download file
+function downloadFile(filePath) {
   let link=document.createElement('a');
   link.href = filePath;
   link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
   link.click();
 }
 
-// need a delay from redirection so download can start
-window.onbeforeunload = function () { 
-  // change to default newtab if we came from a 
-  if (fromParameters) {
-    // need a slight delay before going back
-    setTimeout(function() {
-      // redirect to previous page if it exists
-      if (window.history.length >= 2) window.history.back();
-      else {
-        // redirect to browser specfic newtab
-        if (isSafari) window.location = 'favorites://';
-        else if (isChrome) window.location = 'chrome://newtab';
-        else if (isOpera) window.location = 'opera://newtab';
-        else if (isEdgeChromium) window.location = 'edge://newtab';
-        else if (isEdge || isIE) window.location = 'about:tabs';
-        else if (isFirefox) window.location = 'about:newtab';
-        else window.location = 'about:blank';
-      }
-    }, urlRedirectDelay);
+// alternative way when using parameters, to know when the download starts
+function downloadFileStarting() {
+  // will try to redirect to previous page or new tab when download starts
+
+  // redirect to previous page if it exists
+  if (window.history.length >= 2) window.history.back();
+  else {
+    // redirect to browser specfic newtab
+    if (isSafari) window.location = 'favorites://';
+    else if (isChrome) window.location = 'chrome://newtab';
+    else if (isOpera) window.location = 'opera://newtab';
+    else if (isEdgeChromium) window.location = 'edge://newtab';
+    else if (isEdge || isIE) window.location = 'about:tabs';
+    else if (isFirefox) window.location = 'about:newtab';
+    else window.location = 'about:blank';
   }
-};
+} 
+function downloadFileBegin(filePath) {
+  let iframeFileDL = document.createElement('iframe');
+  iframeFileDL.id = 'iframeFileDL';
+  iframeFileDL.src = 'about:blank';
+  iframeFileDL.style = 'display: none';
+
+  document.body.appendChild(iframeFileDL);
+
+  iframeFileDL.src = filePath;
+}
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
