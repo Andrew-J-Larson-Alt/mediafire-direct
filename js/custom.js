@@ -1,6 +1,7 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
+const validMediafireIdentifierDL = /^[a-zA-Z0-9]$/m;
 const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+/m;
 const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
@@ -64,7 +65,7 @@ window.onbeforeunload = function () {
 };
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
-  let validatedURL = validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
+  let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
   if (url) {
@@ -109,6 +110,8 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
   // modify the link to work with proxy
   url = url.replace('http://', 'https://'); // not required, but makes them secure
+  // if it's just the download identifier, add on mediafire pre-link
+  if (validMediafireIdentifierDL.test(url)) url = 'https://mediafire.com/?' + url;
   // if the link doesn't have http(s), it needs to be appended
   if (!checkHTTP.test(url)) url = 'https://' + url;
 

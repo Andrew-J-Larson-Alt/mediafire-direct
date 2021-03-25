@@ -71,16 +71,19 @@
 
         <p id="mediafire-dl-p"><a href="#" onclick="attemptDownloadRedirect();" id="mediafire-dl-btn" class="button green disable">Direct Download</a></p>
 
-        <div id="invalid-url" class="hide"><span style="color: red">Invalid URL, please make sure your Mediafire download link is in one of the following formats:</span><br>
+        <div id="invalid-url" class="hide"><span style="color: red">Invalid URL or identifier, please make sure your Mediafire URL or identifier is in one of the following formats:</span><br>
           <ul style="color: lightslategray">
             <li>
-              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/?[long-random-string]</span>
+              <span class="required">[download-identifier]</span>
             </li>
             <li>
-              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/view/[long-random-string]</span><span class="optional">/[file-name.extension]</span>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/?[download-identifier]</span>
             </li>
             <li>
-              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/file/[long-random-string]</span><span class="optional">/[file-name.extension]</span><span class="optional">/file</span>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/view/[download-identifier]</span><span class="optional">/[file-name.extension]</span>
+            </li>
+            <li>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/file/[download-identifier]</span><span class="optional">/[file-name.extension]</span><span class="optional">/file</span>
             </li>
           </ul>
         <span style="text-decoration: underline">Key:</span><br>
