@@ -94,19 +94,6 @@ let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   }
 };
 
-let validationDelayChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMediafireNewUrl) {
-  // clear previous timeout
-  if (validateDelayCheck) {
-    clearTimeout(validateDelayCheck);
-    validateDelayCheck = null;
-  }
-
-  // start new timeout
-  validateDelayCheck = setTimeout(function() {
-    validationChecker(url, dlBtn, pInvalid, containedNewUrl, spanMediafireNewUrl);
-  }, 100);
-};
-
 let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
@@ -195,16 +182,11 @@ window.addEventListener('load', function () {
     attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
   };
 
-  // need 100 ms delay to get true value afterwards
-
-  // detect key presses (except control keys)
+  // detect any changes to url value
   setInterval(function() {
     if (previousUrlValue != inputMediafireURL.value) {
-      validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+      validationChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
       previousUrlValue = inputMediafireURL.value;
     }
   }, urlCheckInterval);
-  // detect right-click actions
-  inputMediafireURL.addEventListener('cut', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
-  inputMediafireURL.addEventListener('paste', function() {validationDelayChecker(inputMediafireURL.value, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)});
 });
