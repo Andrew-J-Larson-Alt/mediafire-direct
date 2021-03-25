@@ -41,13 +41,13 @@ body {
 
 .optional {
   border-radius: 2px;
-  border: 1px solid yellow;
+  border: 2px solid yellow;
   padding: 0.25em;
   margin: 0 0.125em;
 }
 .required {
   border-radius: 2px;
-  border: 1px solid green;
+  border: 2px solid green;
   padding: 0.25em;
   margin: 0 0.125em;
 }
