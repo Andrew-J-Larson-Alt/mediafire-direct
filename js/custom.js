@@ -160,7 +160,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   }
 };
 
-let restartKeypressed = fuction() {
+let restartKeypressed = function() {
   // restart the key press timeout
   keypressed = true;
   if (keypressedTimeout) {
