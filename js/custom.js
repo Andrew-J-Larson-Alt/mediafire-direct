@@ -62,13 +62,12 @@ function downloadFileStarting() {
 function downloadFileBegin(filePath) {
   let iframeFileDL = document.createElement('iframe');
   iframeFileDL.id = 'iframeFileDL';
-  iframeFileDL.src = '#';
-  iframeFileDL.onload = downloadFileStarting;
+  iframeFileDL.src = 'about:blank';
+  iframeFileDL.onload = 'downloadFileStarting()';
   iframeFileDL.style = 'display: none';
 
   document.body.appendChild(iframeFileDL);
 
-  iframeFileDL.src = 'about:blank';
   iframeFileDL.src = filePath;
 }
 
