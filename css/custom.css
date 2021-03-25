@@ -52,6 +52,10 @@ body {
   margin: 0.125em;
 }
 
+.subtle {
+  color: darkgray;
+}
+
 .disable {
   opacity: 0.33;
   pointer-events: none;
