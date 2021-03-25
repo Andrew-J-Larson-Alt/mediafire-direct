@@ -63,6 +63,7 @@ function downloadFileBegin(filePath) {
   let iframeFileDL = document.createElement('iframe');
   iframeFileDL.id = 'iframeFileDL';
   iframeFileDL.src = 'about:blank';
+  iframeFileDL.onload = downloadFileStarting;
   iframeFileDL.style = 'display: none';
 
   document.body.appendChild(iframeFileDL);
@@ -189,7 +190,7 @@ window.addEventListener('load', function () {
   if (paramURL) {
     fromParameters = true;
     inputMediafireURL.value = paramURL;
-    console.log(`Validating "${paramURL}" as Mediafire download link...`);
+    console.log(`Validating "${paramURL}" as valid Mediafire download...`);
   }
   // run checker once on after parameter check
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
