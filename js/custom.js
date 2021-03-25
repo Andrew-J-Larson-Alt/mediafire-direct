@@ -67,6 +67,7 @@ let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
 
   // Test if the new value is a valid link, to enable the download button
   if (url) {
+    console.log(validatedURL); // DOING TESTS
     // check if we have valid url
     if (validatedURL) {
       if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
