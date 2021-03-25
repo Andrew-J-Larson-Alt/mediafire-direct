@@ -195,9 +195,10 @@ window.addEventListener('load', function () {
     attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
   };
 
-  // need to check for keydown or keypress to prevent the url validator from checking too early
+  // need to check for any key events to make sure we get correct url value
   inputMediafireURL.addEventListener('keydown', restartKeypressed);
   inputMediafireURL.addEventListener('keypress', restartKeypressed);
+  inputMediafireURL.addEventListener('keyup', restartKeypressed);
 
   // detect any changes to url value
   setInterval(function() {
