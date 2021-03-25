@@ -6,7 +6,7 @@ const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0
 const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
 const checkHTTP = /^https?:\/\//m;
-const paramDownloadDelay = 1000; // ms
+const paramDownloadDelay = 100; // ms
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -45,20 +45,21 @@ function downloadFile(filePath) {
 
 // alternative way when using parameters, to know when the download starts
 function downloadFileStarting() {
-  // will try to redirect to previous page or new tab when download starts
-
-  // redirect to previous page if it exists
-  if (window.history.length >= 2) window.history.back();
-  else {
-    // redirect to browser specfic newtab
-    if (isSafari) window.location = 'favorites://';
-    else if (isChrome) window.location = 'chrome://newtab';
-    else if (isOpera) window.location = 'opera://newtab';
-    else if (isEdgeChromium) window.location = 'edge://newtab';
-    else if (isEdge || isIE) window.location = 'about:tabs';
-    else if (isFirefox) window.location = 'about:newtab';
-    else window.location = 'about:blank';
-  }
+  // will try to redirect to previous page or new tab when download starts after a tiny delay
+  setTimeout(function() {
+    // redirect to previous page if it exists
+    if (window.history.length >= 2) window.history.back();
+    else {
+      // redirect to browser specfic newtab
+      if (isSafari) window.location = 'favorites://';
+      else if (isChrome) window.location = 'chrome://newtab';
+      else if (isOpera) window.location = 'opera://newtab';
+      else if (isEdgeChromium) window.location = 'edge://newtab';
+      else if (isEdge || isIE) window.location = 'about:tabs';
+      else if (isFirefox) window.location = 'about:newtab';
+      else window.location = 'about:blank';
+    }
+  }, paramDownloadDelay);
 } 
 function downloadFileBegin(filePath) {
   let iframeDivDL = document.createElement('div');
