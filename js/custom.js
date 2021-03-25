@@ -70,7 +70,7 @@ function downloadFileBegin(filePath) {
   let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
   iframeDivDL.innerHTML = iframeFileDL;
 
-  document.getElementById('iframeFileDL').src = filePath;
+  setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
 }
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
