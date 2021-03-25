@@ -207,9 +207,9 @@ window.addEventListener('load', function () {
     // need to ignore keydown or keypress before checking again
     if (!keypressed) {
       if (previousUrlValue != currentUrl) {
-      validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
-      previousUrlValue = currentUrl;
-    }
+        validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+        previousUrlValue = currentUrl;
+      }
     }
   }, urlCheckInterval);
 });
