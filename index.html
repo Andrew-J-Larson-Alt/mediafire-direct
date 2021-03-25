@@ -71,7 +71,16 @@
 
         <p id="mediafire-dl-p"><a href="#" onclick="attemptDownloadRedirect();" id="mediafire-dl-btn" class="button green disable">Direct Download</a></p>
 
-        <p id="invalid-url" class="hide"><span style="color: red">Invalid URL, please make sure your Mediafire download link is in the following format:</span> <span style="color: darkgray">http://www.mediafire.com/file/[long-random-string]/file</span></p>
+        <p id="invalid-url" class="hide"><span style="color: red">Invalid URL, please make sure your Mediafire download link is in one of the following formats:</span> 
+            <ul style="color: darkgray">
+                <li><span>https://www.mediafire.com/file/[long-random-string]/file</span></li>
+                <li><span>https://mediafire.com/file/[long-random-string]/file</span></li>
+                <li><span>http://www.mediafire.com/file/[long-random-string]/file</span></li>
+                <li><span>http://mediafire.com/file/[long-random-string]/file</span></li>
+                <li><span>www.mediafire.com/file/[long-random-string]/file</span></li>
+                <li><span>mediafire.com/file/[long-random-string]/file</span></li>
+            </ul>
+        </p>
 
         <p id="invalid-page" class="hide"><span style="color: red">Invalid page, please make sure your Mediafire download link is real and hasn't been taken down.</span></p>
 	</div>
