@@ -6,7 +6,8 @@ const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0
 const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
 const checkHTTP = /^https?:\/\//m;
-const paramDownloadDelay = 100; // ms
+const paramDL_initialDelay = 100; // ms
+const paramDL_loadDelay = 500; // ms
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -42,27 +43,6 @@ function downloadFile(filePath) {
   link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
   link.click();
 }
-// use new tab to download file
-function downloadFileNewTab(filePath) {
-  let link=document.createElement('a');
-  link.href = filePath;
-  link.target = '_blank';
-  link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
-  link.click();
-
-  // redirect to previous page if it exists
-  if (window.history.length >= 2) window.history.back();
-  else {
-    // redirect to browser specfic newtab
-    if (isSafari) window.location = 'favorites://';
-    else if (isChrome) window.location = 'chrome://newtab';
-    else if (isOpera) window.location = 'opera://newtab';
-    else if (isEdgeChromium) window.location = 'edge://newtab';
-    else if (isEdge || isIE) window.location = 'about:tabs';
-    else if (isFirefox) window.location = 'about:newtab';
-    else window.location = 'about:blank';
-  }
-}
 
 // alternative way when using parameters, to know when the download starts
 function downloadFileStarting() {
@@ -80,7 +60,7 @@ function downloadFileStarting() {
       else if (isFirefox) window.location = 'about:newtab';
       else window.location = 'about:blank';
     }
-  }, paramDownloadDelay*2.5);
+  }, paramDL_loadDelay);
 } 
 function downloadFileBegin(filePath) {
   let iframeDivDL = document.createElement('div');
@@ -90,7 +70,7 @@ function downloadFileBegin(filePath) {
   let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
   iframeDivDL.innerHTML = iframeFileDL;
 
-  setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDownloadDelay);
+  setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
 }
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
@@ -167,7 +147,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
           console.log(`Downloading from "${dlUrl}"...`);
           // need to do correct download based on if we came from parameters
-          if (fromParameters) downloadFileNewTab(dlUrl);
+          if (fromParameters) downloadFileBegin(dlUrl);
           else downloadFile(dlUrl);
 
           return true;
