@@ -60,15 +60,15 @@ function downloadFileStarting() {
   }
 } 
 function downloadFileBegin(filePath) {
-  let iframeFileDL = document.createElement('iframe');
-  iframeFileDL.id = 'iframeFileDL';
-  iframeFileDL.src = 'about:blank';
-  iframeFileDL.onload = 'downloadFileStarting()';
-  iframeFileDL.style = 'display: none';
+  let iframeDivDL = document.createElement('div');
+  iframeDivDL.style = 'display: none';
+  document.body.appendChild(iframeDivDL);
 
-  document.body.appendChild(iframeFileDL);
+  //let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
+  let iframeFileDL = '<iframe id="iframeFileDL" src="' + filePath + '" onload="downloadFileStarting()"></iframe>';
+  iframeDivDL.innerHTML = iframeFileDL;
 
-  iframeFileDL.src = filePath;
+  //iframeDivDL.getElementById('iframeFileDL').src = filePath;
 }
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
