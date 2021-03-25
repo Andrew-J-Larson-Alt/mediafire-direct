@@ -64,11 +64,10 @@ function downloadFileBegin(filePath) {
   iframeDivDL.style = 'display: none';
   document.body.appendChild(iframeDivDL);
 
-  //let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
-  let iframeFileDL = '<iframe id="iframeFileDL" src="' + filePath + '" onload="downloadFileStarting()"></iframe>';
+  let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
   iframeDivDL.innerHTML = iframeFileDL;
 
-  //iframeDivDL.getElementById('iframeFileDL').src = filePath;
+  iframeDivDL.getElementById('iframeFileDL').src = filePath;
 }
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
