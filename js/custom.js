@@ -3,7 +3,6 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
 const checkHTTP = /^https?:\/\//gm;
-const keypressedDelay = 250; // ms
 const urlCheckInterval = 100; // ms
 const urlRedirectDelay = 500; // ms
 
@@ -19,8 +18,6 @@ var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 // Variables
 
-let keypressed = false;
-let keypressedTimeout = null;
 let validateDelayCheck = null;
 let fromParameters = false;
 let previousUrlValue = '';
@@ -160,15 +157,13 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   }
 };
 
-let restartKeypressed = function() {
-  // restart the key press timeout
-  keypressed = true;
-  if (keypressedTimeout) {
-    clearTimeout(keypressedTimeout);
-    keypressedTimeout = null;
+let observer = new MutationObserver((mutationsList) => {
+  for (let mutation of mutationsList) {
+    console.log(mutation);
   }
-  keypressedTimeout = setTimeout(function() {keypressed = false;}, keypressedDelay);
-};
+
+  observer.disconnect();
+});
 
 // Wait for page to load
 window.addEventListener('load', function () {
@@ -195,22 +190,14 @@ window.addEventListener('load', function () {
     attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
   };
 
-  // need to check for any key events to make sure we get correct url value
-  inputMediafireURL.addEventListener('keydown', restartKeypressed);
-  inputMediafireURL.addEventListener('keypress', restartKeypressed);
-  inputMediafireURL.addEventListener('keyup', restartKeypressed);
-
   // detect any changes to url value
   setInterval(function() {
     // needs to be captured before checking since it changes fast
     let currentUrl = inputMediafireURL.value;
-  
-    // need to ignore keydown or keypress before checking again
-    if (!keypressed) {
-      if (previousUrlValue != currentUrl) {
-        validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
         previousUrlValue = currentUrl;
-      }
-    }
   }, urlCheckInterval);
+
+  // DOING OBSERVER TESTING
+  observer.observe(inputMediafireURL, { attributes: true });
 });
