@@ -3,6 +3,7 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
 const checkHTTP = /^https?:\/\//gm;
+const keypressedDelay = 50; // ms
 const urlCheckInterval = 100; // ms
 const urlRedirectDelay = 500; // ms
 
@@ -18,6 +19,8 @@ var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 // Variables
 
+let keypressed = false;
+let keypressedTimeout = null;
 let validateDelayCheck = null;
 let fromParameters = false;
 let previousUrlValue = '';
@@ -157,6 +160,16 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   }
 };
 
+let restartKeypressed = fuction() {
+  // restart the key press timeout
+  keypressed = true;
+  if (keypressedTimeout) {
+    clearTimeout(keypressedTimeout);
+    keypressedTimeout = null;
+  }
+  let setTimeout(function() {keypressed = false;}, keypressedDelay);
+};
+
 // Wait for page to load
 window.addEventListener('load', function () {
   // Elements
@@ -182,13 +195,21 @@ window.addEventListener('load', function () {
     attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
   };
 
+  // need to check for keydown or keypress to prevent the url validator from checking too early
+  inputMediafireURL.addEventListener('keydown', restartKeypressed);
+  inputMediafireURL.addEventListener('keypress', restartKeypressed);
+
   // detect any changes to url value
   setInterval(function() {
     // needs to be captured before checking since it changes fast
     let currentUrl = inputMediafireURL.value;
-    if (previousUrlValue != currentUrl) {
+  
+    // need to ignore keydown or keypress before checking again
+    if (... | ...) {
+      if (previousUrlValue != currentUrl) {
       validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
       previousUrlValue = currentUrl;
+    }
     }
   }, urlCheckInterval);
 });
