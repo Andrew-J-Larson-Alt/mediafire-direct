@@ -1,8 +1,8 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
-const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm;
-const checkHTTP = /^https?:\/\//gm;
+const validMediafireFileDL = (new RegExp('/^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]*\/file$/gm'));
+const checkHTTP = (new RegExp('/^https?:\/\//gm');
 const urlCheckInterval = 100; // ms
 const urlRedirectDelay = 500; // ms
 
@@ -25,10 +25,10 @@ let previousUrlValue = '';
 // Functions
 
 function getQueryStringArray(){
-  let assoc=[]; 
-  let items = window.location.search.substring(1).split('&'); 
-  for(let j = 0; j < items.length; j++) { 
-    let a = items[j].split('='); assoc[a[0]] = a[1]; 
+  let assoc=[];
+  let items = window.location.search.substring(1).split('&');
+  for(let j = 0; j < items.length; j++) {
+    let a = items[j].split('='); assoc[a[0]] = a[1];
   }
   return assoc;
 }
