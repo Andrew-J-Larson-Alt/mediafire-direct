@@ -59,7 +59,7 @@ function downloadFileStarting() {
       else if (isFirefox) window.location = 'about:newtab';
       else window.location = 'about:blank';
     }
-  }, paramDownloadDelay);
+  }, paramDownloadDelay*5);
 } 
 function downloadFileBegin(filePath) {
   let iframeDivDL = document.createElement('div');
