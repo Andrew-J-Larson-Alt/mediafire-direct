@@ -157,14 +157,6 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   }
 };
 
-let observer = new MutationObserver((mutationsList) => {
-  for (let mutation of mutationsList) {
-    console.log(mutation);
-  }
-
-  observer.disconnect();
-});
-
 // Wait for page to load
 window.addEventListener('load', function () {
   // Elements
@@ -191,8 +183,10 @@ window.addEventListener('load', function () {
   };
 
   // detect any changes to url value
-  observer.observe(inputMediafireURL, {
-    subtree: true,
-    characterData: true
-  });
+  inputMediafireURL.oninput = function() {
+    // needs to be captured before checking since it changes fast
+    let currentUrl = inputMediafireURL.value;
+    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+    previousUrlValue = currentUrl;
+  }
 });
