@@ -140,8 +140,12 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 	    // redirect to direct download if the download page was real (and not taken down)
         let mfDlBtn = doc.getElementById('downloadButton');
 	    if (mfDlBtn && mfDlBtn.href) {
-          console.log(`Downloading from "${mfDlBtn.href}"...`);
-          downloadFile(mfDlBtn.href);
+          let dlUrl = mfDlBtn.href;
+
+          console.log(`Downloading from "${dlUrl}"...`);
+          // need to do correct download based on if we came from parameters
+          if (fromParameters) downloadFileBegin(dlUrl);
+          else downloadFile(dlUrl);
 
           return true;
         }
