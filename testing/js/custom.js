@@ -106,42 +106,21 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   }
 };
 
-// this is an async function, but trying to write it normally causes errors in phantomJS
-var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
-  // in case we are running from the download button
-  if (!url) url = document.getElementById('mediafire-url').value;
-  if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
-  if (!spanMediafireNewUrl) spanMediafireNewUrl = document.getElementById('mediafire-new-url');
-  if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
-  if (!invalidUrlP) invalidUrlP = document.getElementById('invalid-url');
-  if (!invalidPageP) invalidPageP = document.getElementById('invalid-page');
+// conditional set for last function
+if (isPhantomJS) {
+  var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
+    // modify the link to work with proxy
+    url = url.replace('http://', 'https://'); // not required, but makes them secure
+    // if it's just the download identifier, add on mediafire pre-link
+    if (validMediafireIdentifierDL.test(url)) url = 'https://mediafire.com/?' + url;
+    // if the link doesn't have http(s), it needs to be appended
+    if (!checkHTTP.test(url)) url = 'https://' + url;
 
-  // reset previous invalid page notice
-  if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
-
-  // modify the link to work with proxy
-  url = url.replace('http://', 'https://'); // not required, but makes them secure
-  // if it's just the download identifier, add on mediafire pre-link
-  if (validMediafireIdentifierDL.test(url)) url = 'https://mediafire.com/?' + url;
-  // if the link doesn't have http(s), it needs to be appended
-  if (!checkHTTP.test(url)) url = 'https://' + url;
-
-  if (!isPhantomJS) console.log(`Checking "${url}" for valid download page...`);
-  // try and get the mediafire page to get actual download link
-//  try {
-    let mediafirePageData = null;
-    let mediafirePageResponse = Promise.resolve(fetch(corsProxy+encodeURIComponent(url))).then(function(data) {
-      if (data) {
-        mediafirePageData = data.json();
-        return mediafirePageData;
-      }
-      return data;
-    });
-
-    // make sure the response was ok
-    if (mediafirePageData) {
-      let html = mediafirePageData.contents;
-
+    console.log(`Checking "${url}" for valid download page...`);
+    // try and get the mediafire page to get actual download link
+    let mediafirePageResponse = Promose.resolve(fetch(corsProxy+encodeURIComponent(url)).then(function() {
+      let jsonData = await data.json();
+      let html = jsonData.contents;
       // if we received a page
       if (html) {
         // Convert the HTML string into a document object
@@ -153,37 +132,86 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
         if (mfDlBtn && mfDlBtn.href) {
           let dlUrl = mfDlBtn.href;
 
-          // provide support for phantomJS to allow scripted downloads
-          if (isPhantomJS) console.log(dlUrl);
-          else {
+          // log for phantomJS
+          console.log(dlurl);
+          return jsonData;
+        }
+      }
+    }).catch(function() {
+      console.log('');
+      return false;
+    });
+    return mediafirePageResponse;
+  };
+} else {
+  var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
+    // in case we are running from the download button
+    if (!url) url = document.getElementById('mediafire-url').value;
+    if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
+    if (!spanMediafireNewUrl) spanMediafireNewUrl = document.getElementById('mediafire-new-url');
+    if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
+    if (!invalidUrlP) invalidUrlP = document.getElementById('invalid-url');
+    if (!invalidPageP) invalidPageP = document.getElementById('invalid-page');
+
+    // reset previous invalid page notice
+    if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
+
+    // modify the link to work with proxy
+    url = url.replace('http://', 'https://'); // not required, but makes them secure
+    // if it's just the download identifier, add on mediafire pre-link
+    if (validMediafireIdentifierDL.test(url)) url = 'https://mediafire.com/?' + url;
+    // if the link doesn't have http(s), it needs to be appended
+    if (!checkHTTP.test(url)) url = 'https://' + url;
+
+    console.log(`Checking "${url}" for valid download page...`);
+    // try and get the mediafire page to get actual download link
+    try {
+      let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
+    
+      // make sure the response was ok
+      if (mediafirePageResponse.ok) {
+        let data = await mediafirePageResponse.json();
+        let html = data.contents;
+
+        // if we received a page
+        if (html) {
+          // Convert the HTML string into a document object
+          let parser = new DOMParser();
+          let doc = parser.parseFromString(html, 'text/html');
+
+          // redirect to direct download if the download page was real (and not taken down)
+          let mfDlBtn = doc.getElementById('downloadButton');
+          if (mfDlBtn && mfDlBtn.href) {
+            let dlUrl = mfDlBtn.href;
+
             console.log(`Downloading from "${dlUrl}"...`);
             // need to do correct download based on if we came from parameters
             if (fromParameters) downloadFileBegin(dlUrl);
             else downloadFile(dlUrl);
-          }
 
-          return true;
+            return true;
+          }
         }
       }
+
+      // all else should produce an error
+      console.error(`No valid download button at "${url}".`);
+      if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+      if (!containerNewUrl.classList.contains('hide')) containerNewUrl.classList.add('hide');
+      spanMediafireNewUrl.innerText = '';
+
+      return false;
+    } catch (err) {
+      // There was an error
+      console.warn('Something went wrong.', err);
+      console.error(`No valid download button at "${url}".`);
+      if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
+      if (!containerNewUrl.classList.contains('hide')) containerNewUrl.classList.add('hide');
+      spanMediafireNewUrl.innerText = '';
+
+      return false;
     }
-
-    // all else should produce an error
-    console.error(`No valid download button at "${url}".`);
-    if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
-    if (!containerNewUrl.classList.contains('hide')) containerNewUrl.classList.add('hide');
-    spanMediafireNewUrl.innerText = '';
-
-    return false;
-/*  } catch (err) {
-    // There was an error
-    console.warn('Something went wrong.', err);
-    console.error(`No valid download button at "${url}".`);
-    if (invalidPageP.classList.contains('hide')) invalidPageP.classList.remove('hide');
-    if (!containerNewUrl.classList.contains('hide')) containerNewUrl.classList.add('hide');
-    spanMediafireNewUrl.innerText = '';
-
-    return false;
-  }*/
+  };
 }
 
 // Wait for page to load
