@@ -203,8 +203,11 @@ window.addEventListener('load', function () {
   }
   // run checker once on after parameter check
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
-    attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
-  };
+    if (!attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl)) {
+      // provide support for phantomJS to prevent its callback from hanging
+      if (isPhantomJS) window.callPhantom({ url: '' });
+    }
+  } else if (isPhantomJS) window.callPhantom({ url: '' }); // provide support for phantomJS to prevent its callback from hanging
 
   // detect any changes to url value
   inputMediafireURL.oninput = function() {
