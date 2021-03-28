@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Mediafire Direct Download</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="css/custom.css">
+	<script src="js/custom.js?avoidcache7"></script>
+	<link rel="stylesheet" href="../css/application.css">
+	<link rel="stylesheet" href="../css/scrollbar.css">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"><!-- kept in root dir for legacy support -->
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png"><!-- kept in root dir for legacy support -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="icon/apple-touch-icon-180x180-precomposed.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="icon/apple-touch-icon-152x152-precomposed.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="icon/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="icon/apple-touch-icon-120x120-precomposed.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="icon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="icon/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="icon/apple-touch-icon-76x76-precomposed.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="icon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="icon/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="icon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="icon/apple-touch-icon-60x60-precomposed.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="icon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="icon/apple-touch-icon-57x57-precomposed.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="194x194" href="icon/favicon-194x194.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#ff8000">
+    <meta name="msapplication-TileColor" content="#0077ff">
+    <meta name="msapplication-TileImage" content="icon/mstile-144x144.png">
+    <meta name="theme-color" content="#0077ff">
+</head>
+<body>
+
+<header id="PageHeader" style="background: url('img/icon-2-brightness-33.png') repeat">
+	<span id="top"></span>
+	<div class="Content">
+		Mediafire Direct Download
+		<img class="Icon" src="./img/icon.png">
+	</div>
+</header>
+
+<section style="height: 75%">
+	<div class="Content">
+
+		<h2>Enter the Mediafire file download URL or identifier below:</h2>
+        
+        <input type="text" id="mediafire-url" autocomplete="off" spellcheck="false" placeholder="https://www.mediafire.com/file/abcde1234567890/file" aria-live="polite">
+        
+        <p id="new-url" class="hide">You can use the link below on other websites for a direct download:<br>
+          <span id="mediafire-new-url"></span>
+        </p>
+
+        <p id="mediafire-dl-p"><a href="#" onclick="attemptDownloadRedirect();" id="mediafire-dl-btn" class="button green disable">Direct Download</a></p>
+
+        <div id="invalid-url" class="hide"><span style="color: red">Invalid URL or identifier, please make sure your Mediafire URL or identifier is in one of the following formats:</span><br>
+          <ul style="color: lightslategray">
+            <li>
+              <span class="required">[download-identifier]</span>
+            </li>
+            <li>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/?[download-identifier]</span>
+            </li>
+            <li>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/view/[download-identifier]</span><span class="optional">/[file-name.extension]</span>
+            </li>
+            <li>
+              <span class="optional">http(s)://</span><span class="optional">www.</span><span class="required">mediafire.com/file/[download-identifier]</span><span class="optional">/[file-name.extension]</span><span class="optional">/file</span>
+            </li>
+          </ul>
+        <span style="text-decoration: underline">Key:</span><br>
+        <span class="optional-key">&nbsp;&nbsp;</span> = Optional<br>
+        <span class="required-key">&nbsp;&nbsp;</span> = Required<br>
+        <br>
+        <span class="subtle">* Note: Folder downloads are not supported.</span>
+        </div>
+
+        <p id="invalid-page" class="hide"><span style="color: red">Invalid page, please make sure the Mediafire download is real and hasn't been taken down.</span></p>
+	</div>
+</section>
+
+<section style="position: fixed; width: 100%; bottom: 0">
+	<div class="Content">
+        <p class="center"><small><a href="https://thealiendrew.github.io">Website by TheAlienDrew</a></small></p>
+	</div>
+</section>
+</body></html>
