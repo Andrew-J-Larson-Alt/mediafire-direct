@@ -106,7 +106,8 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   }
 };
 
-async function attemptDownloadRedirect(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
+// this is an async function, but trying to write it normally causes errors in phantomJS
+var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
   if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
@@ -128,11 +129,11 @@ async function attemptDownloadRedirect(url, dlBtn, invalidUrlP, invalidPageP, co
   if (!isPhantomJS) console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
   try {
-    let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
+    let mediafirePageResponse = Promise.Resolve(fetch(corsProxy+encodeURIComponent(url)).then(() => undefined);
     
     // make sure the response was ok
     if (mediafirePageResponse.ok) {
-      let data = await mediafirePageResponse.json();
+      let data = Promise.Resolve(mediafirePageResponse.json()).then(() => undefined);
       let html = data.contents;
 
       // if we received a page
