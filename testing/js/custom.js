@@ -131,7 +131,10 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
 //  try {
     let mediafirePageData = null;
     let mediafirePageResponse = Promise.resolve(fetch(corsProxy+encodeURIComponent(url))).then(function(data) {
-      if (data && data.json()) mediafirePageData = data.json();
+      if (data) {
+        mediafirePageData = data.json();
+        return mediafirePageData;
+      }
       return data;
     });
 
