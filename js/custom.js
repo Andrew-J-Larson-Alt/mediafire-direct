@@ -81,6 +81,9 @@ function waitAndCallPhantom(jsonObject) {
     }
   }, 100);
 }
+// REMOVE ME
+// doing more phantomjs testing
+if (typeof window.callPhantom === 'function') window.callPhantom({ hello: 'world' });
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
