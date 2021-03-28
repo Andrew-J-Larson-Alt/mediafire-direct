@@ -125,7 +125,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   // if the link doesn't have http(s), it needs to be appended
   if (!checkHTTP.test(url)) url = 'https://' + url;
 
-  console.log(`Checking "${url}" for valid download page...`);
+  if (!isPhantomJS) console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
   try {
     let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
@@ -147,10 +147,8 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           let dlUrl = mfDlBtn.href;
 
           // provide support for phantomJS to allow scripted downloads
-          if (isPhantomJS) {
-            console.log(`Proving phantomJS with "${dlUrl}"...`);
-            window.callPhantom(dlUrl);
-          } else {
+          if (isPhantomJS) console.log(window.callPhantom(dlUrl));
+          else {
             console.log(`Downloading from "${dlUrl}"...`);
             // need to do correct download based on if we came from parameters
             if (fromParameters) downloadFileBegin(dlUrl);
@@ -199,15 +197,15 @@ window.addEventListener('load', function () {
   if (paramURL) {
     fromParameters = true;
     inputMediafireURL.value = paramURL;
-    console.log(`Validating "${paramURL}" as valid Mediafire download...`);
+    if (!isPhantomJS) console.log(`Validating "${paramURL}" as valid Mediafire download...`);
   }
   // run checker once on after parameter check
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
     if (!attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl)) {
       // provide support for phantomJS to prevent its callback from hanging
-      if (isPhantomJS) window.callPhantom('');
+      if (isPhantomJS) console.log('');
     }
-  } else if (isPhantomJS) window.callPhantom(''); // provide support for phantomJS to prevent its callback from hanging
+  } else if (isPhantomJS) console.log(''); // provide support for phantomJS to prevent its callback from hanging
 
   // detect any changes to url value
   inputMediafireURL.oninput = function() {
