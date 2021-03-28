@@ -18,6 +18,7 @@ var isEdge = !isIE && !!window.StyleMedia;
 var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
 var isBlink = (isChrome || isOpera) && !!window.CSS;
+var isPhantomJS = window.callPhantom || window._phantom;
 
 // Variables
 
@@ -145,10 +146,19 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         if (mfDlBtn && mfDlBtn.href) {
           let dlUrl = mfDlBtn.href;
 
-          console.log(`Downloading from "${dlUrl}"...`);
-          // need to do correct download based on if we came from parameters
-          if (fromParameters) downloadFileBegin(dlUrl);
-          else downloadFile(dlUrl);
+          // provide support for phantomJS to allow scripted downloads
+          if (isPhantomJS) {
+            console.log(`Proving phantomJS with "${dlUrl}"...`);
+            let newWebpage = `<html><body><div id="phantomjs">${dlUrl}</div></body></html>`;
+            document.open();
+            document.write(newWebpage);
+            document.close();
+          } else {
+            console.log(`Downloading from "${dlUrl}"...`);
+            // need to do correct download based on if we came from parameters
+            if (fromParameters) downloadFileBegin(dlUrl);
+            else downloadFile(dlUrl);
+          }
 
           return true;
         }
