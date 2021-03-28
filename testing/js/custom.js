@@ -105,9 +105,8 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
     return false;
   }
 };
-console.log('after fifth function');
 
-var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
+async function attemptDownloadRedirect(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
   if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
@@ -178,5 +177,41 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
     return false;
   }
-};
-console.log('after sixth function');// Wait for page to load
+}
+
+// Wait for page to load
+window.addEventListener('load', function() {
+  // Elements
+
+  let inputMediafireURL = document.getElementById('mediafire-url');
+  let containerNewUrl = document.getElementById('new-url');
+  let spanMediafireNewUrl = document.getElementById('mediafire-new-url');
+  let aMediafireDownloadBtn = document.getElementById('mediafire-dl-btn');
+  let pInvalidURL = document.getElementById('invalid-url');
+  let pInvalidPage = document.getElementById('invalid-page');
+    
+  // Main
+
+  // check URL parameters first
+  let paramURL = getQueryStringArray().dl;
+  if (paramURL) {
+    fromParameters = true;
+    inputMediafireURL.value = paramURL;
+    if (!isPhantomJS) console.log(`Validating "${paramURL}" as valid Mediafire download...`);
+  }
+  // run checker once on after parameter check
+  if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
+    if (!attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl)) {
+      // provide support for phantomJS to prevent its callback from hanging
+      if (isPhantomJS) console.log('');
+    }
+  } else if (isPhantomJS) console.log(''); // provide support for phantomJS to prevent its callback from hanging
+
+  // detect any changes to url value
+  inputMediafireURL.oninput = function() {
+    // needs to be captured before checking since it changes fast
+    let currentUrl = inputMediafireURL.value;
+    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+    previousUrlValue = currentUrl;
+  }
+});
