@@ -147,7 +147,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           let dlUrl = mfDlBtn.href;
 
           // provide support for phantomJS to allow scripted downloads
-          if (isPhantomJS) console.log(window.callPhantom(dlUrl));
+          if (isPhantomJS) console.log(dlUrl);
           else {
             console.log(`Downloading from "${dlUrl}"...`);
             // need to do correct download based on if we came from parameters
