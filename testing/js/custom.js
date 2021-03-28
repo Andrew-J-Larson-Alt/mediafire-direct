@@ -119,7 +119,7 @@ if (isPhantomJS) {
     console.log(`Checking "${url}" for valid download page...`);
     // try and get the mediafire page to get actual download link
     let mediafirePageResponse = Promose.resolve(fetch(corsProxy+encodeURIComponent(url)).then(function() {
-      let jsonData = await data.json();
+      let jsonData = data.json();
       let html = jsonData.contents;
       // if we received a page
       if (html) {
