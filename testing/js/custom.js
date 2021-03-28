@@ -20,4 +20,21 @@ var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
 var isBlink = (isChrome || isOpera) && !!window.CSS;
 var isPhantomJS = window.callPhantom || window._phantom;
 
-console.log('after browser variables');
+// Variables
+
+let validateDelayCheck = null;
+let fromParameters = false;
+let previousUrlValue = '';
+
+// Functions
+
+var getQueryStringArray = function() {
+  let assoc=[];
+  let items = window.location.search.substring(1).split('&');
+  for(let j = 0; j < items.length; j++) {
+    let a = items[j].split('='); assoc[a[0]] = a[1];
+  }
+  return assoc;
+};
+
+console.log('after first function');
