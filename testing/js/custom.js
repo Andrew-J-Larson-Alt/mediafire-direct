@@ -10,14 +10,7 @@ const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
 
 // Browser Detection Variables
-var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-var isFirefox = typeof InstallTrigger !== 'undefined';
-var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
-var isIE = /*@cc_on!@*/false || !!document.documentMode;
-var isEdge = !isIE && !!window.StyleMedia;
 var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
-var isBlink = (isChrome || isOpera) && !!window.CSS;
 var isPhantomJS = window.callPhantom || window._phantom;
 
 // Variables
@@ -35,43 +28,6 @@ var getQueryStringArray = function() {
     let a = items[j].split('='); assoc[a[0]] = a[1];
   }
   return assoc;
-};
-
-// normal way to download file
-var downloadFile = function(filePath) {
-  let link=document.createElement('a');
-  link.href = filePath;
-  link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
-  link.click();
-};
-
-// alternative way when using parameters, to know when the download starts
-var downloadFileStarting = function() {
-  // will try to redirect to previous page or new tab when download starts after a tiny delay
-  setTimeout(function() {
-    // redirect to previous page if it exists
-    if (window.history.length >= 2) window.history.back();
-    else {
-      // redirect to browser specfic newtab
-      if (isSafari) window.location = 'favorites://';
-      else if (isChrome) window.location = 'chrome://newtab';
-      else if (isOpera) window.location = 'opera://newtab';
-      else if (isEdgeChromium) window.location = 'edge://newtab';
-      else if (isEdge || isIE) window.location = 'about:tabs';
-      else if (isFirefox) window.location = 'about:newtab';
-      else window.location = 'about:blank';
-    }
-  }, paramDL_loadDelay);
-};
-var downloadFileBegin = function(filePath) {
-  let iframeDivDL = document.createElement('div');
-  iframeDivDL.style = 'display: none';
-  document.body.appendChild(iframeDivDL);
-
-  let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
-  iframeDivDL.innerHTML = iframeFileDL;
-
-  setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
 };
 
 var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
@@ -148,12 +104,6 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
           // provide support for phantomJS to allow scripted downloads
           if (isPhantomJS) console.log(dlUrl);
-          else {
-            console.log(`Downloading from "${dlUrl}"...`);
-            // need to do correct download based on if we came from parameters
-            if (fromParameters) downloadFileBegin(dlUrl);
-            else downloadFile(dlUrl);
-          }
 
           return true;
         }
@@ -205,13 +155,5 @@ window.addEventListener('load', function() {
       // provide support for phantomJS to prevent its callback from hanging
       if (isPhantomJS) console.log('');
     }
-  } else if (isPhantomJS) console.log(''); // provide support for phantomJS to prevent its callback from hanging
-
-  // detect any changes to url value
-  inputMediafireURL.oninput = function() {
-    // needs to be captured before checking since it changes fast
-    let currentUrl = inputMediafireURL.value;
-    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
-    previousUrlValue = currentUrl;
   }
 });
