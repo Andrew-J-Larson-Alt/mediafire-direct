@@ -45,8 +45,6 @@ var downloadFile = function(filePath) {
   link.click();
 };
 
-console.log('after second function');
-
 // alternative way when using parameters, to know when the download starts
 var downloadFileStarting = function() {
   // will try to redirect to previous page or new tab when download starts after a tiny delay
@@ -64,4 +62,15 @@ var downloadFileStarting = function() {
       else window.location = 'about:blank';
     }
   }, paramDL_loadDelay);
-}; console.log('after third function');
+};
+var downloadFileBegin = function(filePath) {
+  let iframeDivDL = document.createElement('div');
+  iframeDivDL.style = 'display: none';
+  document.body.appendChild(iframeDivDL);
+
+  let iframeFileDL = '<iframe id="iframeFileDL" src="about:blank" onload="downloadFileStarting()"></iframe>';
+  iframeDivDL.innerHTML = iframeFileDL;
+
+  setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
+};
+console.log('after fourth function');
