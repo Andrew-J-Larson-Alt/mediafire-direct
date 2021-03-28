@@ -129,11 +129,20 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
   if (!isPhantomJS) console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
 //  try {
-    let mediafirePageResponse = Promise.resolve(fetch(corsProxy+encodeURIComponent(url))).then(data => data);
-    
+    let mediafirePageResponse = null;
+    let mediafirePageData = Promise.resolve(fetch(corsProxy+encodeURIComponent(url))).then(function(data) {
+      if (data) mediafirePageResponse = true;
+      return data;
+    });
+
     // make sure the response was ok
-    if (mediafirePageResponse.ok) {
-      let data = Promise.resolve(mediafirePageResponse.json()).then(webpage => webpage.json());
+    if (mediafirePageResponse) {
+      let data = null;
+      let finalResponse = null;
+      let finalData = Promise.resolve(mediafirePageResponse.json()).then(function(webpage) {
+        if (webpage && webpage.json()) data = webpage.json();
+        return webpage.json();
+      });
       let html = data.contents;
 
       // if we received a page
