@@ -28,25 +28,25 @@ let previousUrlValue = '';
 
 // Functions
 
-function getQueryStringArray() {
+var getQueryStringArray = function() {
   let assoc=[];
   let items = window.location.search.substring(1).split('&');
   for(let j = 0; j < items.length; j++) {
     let a = items[j].split('='); assoc[a[0]] = a[1];
   }
   return assoc;
-}
+};
 
 // normal way to download file
-function downloadFile(filePath) {
+var downloadFile = function(filePath) {
   let link=document.createElement('a');
   link.href = filePath;
   link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
   link.click();
-}
+};
 
 // alternative way when using parameters, to know when the download starts
-function downloadFileStarting() {
+var downloadFileStarting = function() {
   // will try to redirect to previous page or new tab when download starts after a tiny delay
   setTimeout(function() {
     // redirect to previous page if it exists
@@ -62,8 +62,8 @@ function downloadFileStarting() {
       else window.location = 'about:blank';
     }
   }, paramDL_loadDelay);
-} 
-function downloadFileBegin(filePath) {
+};
+var downloadFileBegin = function(filePath) {
   let iframeDivDL = document.createElement('div');
   iframeDivDL.style = 'display: none';
   document.body.appendChild(iframeDivDL);
@@ -72,9 +72,9 @@ function downloadFileBegin(filePath) {
   iframeDivDL.innerHTML = iframeFileDL;
 
   setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
-}
+};
 
-let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
+var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
@@ -106,7 +106,7 @@ let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   }
 };
 
-let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
+var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
   if (!url) url = document.getElementById('mediafire-url').value;
   if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
@@ -180,7 +180,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 };
 
 // Wait for page to load
-window.addEventListener('load', function () {
+window.addEventListener('load', function() {
   // Elements
 
   let inputMediafireURL = document.getElementById('mediafire-url');
