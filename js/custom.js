@@ -149,10 +149,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           // provide support for phantomJS to allow scripted downloads
           if (isPhantomJS) {
             console.log(`Proving phantomJS with "${dlUrl}"...`);
-            let newWebpage = `<html><body><div id="phantomjs">${dlUrl}</div></body></html>`;
-            document.open();
-            document.write(newWebpage);
-            document.close();
+            window.callPhantom({ url: dlUrl });
           } else {
             console.log(`Downloading from "${dlUrl}"...`);
             // need to do correct download based on if we came from parameters
