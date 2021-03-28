@@ -128,7 +128,7 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
 
   if (!isPhantomJS) console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
-  try {
+//  try {
     let mediafirePageResponse = Promise.Resolve(fetch(corsProxy+encodeURIComponent(url))).then(() => undefined);
     
     // make sure the response was ok
@@ -168,7 +168,7 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
     spanMediafireNewUrl.innerText = '';
 
     return false;
-  } catch (err) {
+/*  } catch (err) {
     // There was an error
     console.warn('Something went wrong.', err);
     console.error(`No valid download button at "${url}".`);
@@ -177,7 +177,7 @@ var attemptDownloadRedirect = function(url, dlBtn, invalidUrlP, invalidPageP, co
     spanMediafireNewUrl.innerText = '';
 
     return false;
-  }
+  }*/
 }
 
 // Wait for page to load
