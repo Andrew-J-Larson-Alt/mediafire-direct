@@ -1,11 +1,11 @@
 // Constants
 
 const corsProxy = 'https://api.allorigins.win/get?url=';
-const validMediafireIdentifierDL = /^[a-zA-Z0-9]+$/m;
-const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+/m;
-const validMediafireViewDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/m;
-const validMediafireFileDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
-const checkHTTP = /^https?:\/\//m;
+const validMediafireIdentifierDL = true;
+const validMediafireShortDL = true;
+const validMediafireViewDL = true;
+const validMediafireFileDL = true;
+const checkHTTP = false;
 const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
 
