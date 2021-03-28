@@ -73,17 +73,6 @@ function downloadFileBegin(filePath) {
 
   setTimeout(function() {document.getElementById('iframeFileDL').src = filePath}, paramDL_initialDelay);
 }
-function waitAndCallPhantom(jsonObject) {
-  let waitingForPhantom = setInterval(function() {
-    if (typeof window.callPhantom === 'function') {
-      clearInterval(waitingForPhantom);
-      window.callPhantom(jsonObject);
-    }
-  }, 100);
-}
-// REMOVE ME
-// doing more phantomjs testing
-if (typeof window.callPhantom === 'function') window.callPhantom({ hello: 'world' });
 
 let validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNewURL) {
   let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireViewDL.test(url) || validMediafireFileDL.test(url);
@@ -160,7 +149,7 @@ let attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           // provide support for phantomJS to allow scripted downloads
           if (isPhantomJS) {
             console.log(`Proving phantomJS with "${dlUrl}"...`);
-            waitAndCallPhantom({ url: dlUrl });
+            window.callPhantom(dlUrl);
           } else {
             console.log(`Downloading from "${dlUrl}"...`);
             // need to do correct download based on if we came from parameters
@@ -216,9 +205,9 @@ window.addEventListener('load', function () {
   if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
     if (!attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl)) {
       // provide support for phantomJS to prevent its callback from hanging
-      if (isPhantomJS) waitAndCallPhantom({ url: '' });
+      if (isPhantomJS) window.callPhantom('');
     }
-  } else if (isPhantomJS) waitAndCallPhantom({ url: '' }); // provide support for phantomJS to prevent its callback from hanging
+  } else if (isPhantomJS) window.callPhantom(''); // provide support for phantomJS to prevent its callback from hanging
 
   // detect any changes to url value
   inputMediafireURL.oninput = function() {
