@@ -11,7 +11,7 @@ const paramDL_loadDelay = 750; // ms
 
 // Browser Detection Variables
 var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-var isPhantomJS = window.callPhantom || window._phantom;
+var isPhantomJS = true;
 
 // Variables
 
