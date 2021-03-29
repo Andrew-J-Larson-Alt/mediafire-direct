@@ -1,5 +1,5 @@
 # mediafire-direct
-Using a normal Mediafire file download URL, this website should automatically redirect to the direct download URL.
+Using a normal Mediafire file download URL, I've created a bash script and website that should automatically redirect to the direct download URL.
 
 ## Bash Usage
 In the `0-bash-scripts` folder, you'll find 2 scripts. Both should be executed like the following:
