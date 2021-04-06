@@ -1,0 +1,224 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto Slab', serif;
+  font-size: 1em;
+  line-height: 1.333em;
+  color: #cdcdcd;
+  margin: 0;
+  padding: 0;
+  background-color: black; }
+
+body {
+  overflow-y: scroll; }
+
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+a.button {
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0 0.5em;
+  margin-left: 0.7em;
+  line-height: 1.8em;
+  font-size: 110%; }
+  a.button:active {
+    position: relative;
+    top: 2px; }
+  a.button, a.button:active, a.button:hover, a.button:visited {
+    text-decoration: none; }
+  a.button.blue {
+    background-color: #2398c8;
+    box-shadow: 0 3px 0 #1b779d;
+    color: #CFF1FF; }
+    a.button.blue:hover, a.button.blue:active {
+      background-color: #15b3e1; }
+    a.button.blue:hover {
+      box-shadow: 0 3px 0 #1086a9; }
+    a.button.blue:active {
+      box-shadow: 0 1px 0 #1086a9; }
+  a.button.red {
+    background-color: #D43137;
+    box-shadow: 0 3px 0 #ae2429;
+    color: #FFE9EA; }
+    a.button.red:hover, a.button.red:active {
+      background-color: #FF3A4A; }
+    a.button.red:hover {
+      box-shadow: 0 3px 0 #fc0014; }
+    a.button.red:active {
+      box-shadow: 0 1px 0 #fc0014; }
+  a.button.black {
+    background-color: #231200;
+    box-shadow: 0 3px 0 black;
+    color: #FFEAD5; }
+    a.button.black:hover, a.button.black:active {
+      background-color: #310B00; }
+    a.button.black:hover {
+      box-shadow: 0 3px 0 black; }
+    a.button.black:active {
+      box-shadow: 0 1px 0 black; }
+  a.button.green {
+    background-color: #458945;
+    box-shadow: 0 3px 0 #346734;
+    color: #c3ffd5; }
+    a.button.green:hover, a.button.green:active {
+      background-color: #2dae42; }
+    a.button.green:hover {
+      box-shadow: 0 3px 0 #207d30; }
+    a.button.green:active {
+      box-shadow: 0 1px 0 #207d30; }
+  a.button.cyan {
+    background-color: #4f9d9d;
+    box-shadow: 0 3px 0 #3e7b7b;
+    color: #112927; }
+    a.button.cyan:hover, a.button.cyan:active {
+      background-color: #2DAEA6; }
+    a.button.cyan:hover {
+      box-shadow: 0 3px 0 #207d78; }
+    a.button.cyan:active {
+      box-shadow: 0 1px 0 #207d78; }
+  a.button.orange {
+    background-color: #ED5D31;
+    box-shadow: 0 3px 0 #d84113;
+    color: #581A07; }
+    a.button.orange:hover, a.button.orange:active {
+      background-color: #e84b1b; }
+    a.button.orange:hover {
+      box-shadow: 0 3px 0 #b43812; }
+    a.button.orange:active {
+      box-shadow: 0 1px 0 #b43812; }
+  a.button.yellow {
+    background-color: #D4D054;
+    box-shadow: 0 3px 0 #c4bf31;
+    color: #4C2B00; }
+    a.button.yellow:hover, a.button.yellow:active {
+      background-color: #E3DD34; }
+    a.button.yellow:hover {
+      box-shadow: 0 3px 0 #bfba1a; }
+    a.button.yellow:active {
+      box-shadow: 0 1px 0 #bfba1a; }
+  a.button.white {
+    background-color: #E6E6E6;
+    box-shadow: 0 3px 0 #cdcdcd;
+    color: #525252; }
+    a.button.white:hover, a.button.white:active {
+      background-color: #E3F1FC; }
+    a.button.white:hover {
+      box-shadow: 0 3px 0 #acd5f6; }
+    a.button.white:active {
+      box-shadow: 0 1px 0 #acd5f6; }
+
+h1 {
+  font-size: 1.77689em;
+  font-weight: bold;
+  padding: 1em 0 0.42219em 0;
+  margin: 0; }
+  h1:first-child {
+    padding-top: 0.56278em; }
+
+h2 {
+  font-size: 1.333em;
+  padding: 0.75019em 0 0.42219em 0;
+  font-weight: bold;
+  margin: 0; }
+
+p {
+  margin: 0.75019em 0 0.75019em 0; }
+
+ul {
+  padding-left: 1.333em; }
+  ul li {
+    margin-left: 1em; }
+
+a {
+  color: #316eb8;
+  text-decoration: none; }
+  a:hover {
+    color: #3c90e5;
+    text-decoration: underline; }
+
+.center {
+  text-align: center; }
+
+section {
+  padding: 0.75019em;
+  overflow: hidden; }
+  section h1 a, section h2 a, section h3 a, section h4 a, section h5 a {
+    padding-left: 0.31672em;
+    color: rgba(102, 102, 102, 0.4);
+    text-decoration: none; }
+    section h1 a:hover, section h2 a:hover, section h3 a:hover, section h4 a:hover, section h5 a:hover {
+      color: #208ffa;
+      opacity: 1;
+      text-decoration: none; }
+  section:nth-child(3n) {
+    background-color: #1F1F1F;
+    color: #f0f0f0; }
+    section:nth-child(3n) h1 a:hover, section:nth-child(3n) h2 a:hover, section:nth-child(3n) h3 a:hover, section:nth-child(3n) h4 a:hover, section:nth-child(3n) h5 a:hover {
+      color: #44a2ff; }
+  section:nth-child(3n+2) {
+    background-color: #0F0F0F;
+    color: #c0c0c0; }
+    section:nth-child(3n+2) h1 a:hover, section:nth-child(3n+2) h2 a:hover, section:nth-child(3n+2) h3 a:hover, section:nth-child(3n+2) h4 a:hover, section:nth-child(3n+2) h5 a:hover {
+      color: #3174be; }
+
+.Content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative; }
+  @media screen and (max-width: 799px) {
+    .Content {
+      padding-left: 0.42219em;
+      padding-right: 0.42219em; } }
+  .Content img {
+    max-width: 100%; }
+  .Content nav.menu {
+    position: absolute;
+    right: 0;
+    top: 0; }
+    .Content nav.menu a {
+      display: block;
+      text-align: left;
+      font-size: 1em;
+      line-height: 1.77689em; }
+      .Content nav.menu a:hover {
+        text-shadow: 0 0 1px #3c90e5;
+        text-decoration: none; }
+    @media screen and (max-width: 800px) {
+      .Content nav.menu {
+        position: relative; } }
+
+#PageHeader {
+  font-size: 2.36859em;
+  line-height: 4.20873em;
+  color: white; }
+  @media screen and (max-width: 650px) {
+    #PageHeader {
+      line-height: 1.333em;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      text-align: center; } }
+  #PageHeader .Content {
+    position: relative; }
+    @media screen and (max-width: 799px) {
+      #PageHeader .Content {
+        padding-left: 0.2376em; } }
+    #PageHeader .Content img {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 3.15733em;
+      height: 3.15733em;
+      transform: translate(0, -50%);
+      border: 0.10031em solid rgba(255, 255, 255, 0.3);
+      vertical-align: middle;
+      display: inline-block; }
+      @media screen and (max-width: 799px) {
+        #PageHeader .Content img {
+          right: 0.2376em; } }
+      @media screen and (max-width: 650px) {
+        #PageHeader .Content img {
+          display: none; } }
+
+/*# sourceMappingURL=application.css.map */
