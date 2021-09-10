@@ -46,7 +46,7 @@ else
       isIdentifierDL=1
     elif [ $(echo "$url" | sed -E 's/^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/\[VALID\]/g') = $urlIsValid ] ||
          [ $(echo "$url" | sed -E 's/^(https?:\/\/)?(www\.)?mediafire\.com\/view\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?$/\[VALID\]/g') = $urlIsValid ] ||
-         [ $(echo "$url" | sed -E 's/^(https?:\/\/)?(www\.)?mediafire\.com\/file\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/\[VALID\]/g') = $urlIsValid ]; then
+         [ $(echo "$url" | sed -E 's/^(https?:\/\/)?(www\.)?mediafire\.com\/(file|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/\[VALID\]/g') = $urlIsValid ]; then
       isInitiallyValid=1
     else # we aren't a mediafire url
       echo "Error: please enter a valid mediafire download URL." >/dev/stderr
