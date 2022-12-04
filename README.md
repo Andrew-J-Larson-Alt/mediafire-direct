@@ -2,11 +2,17 @@
 Using a normal Mediafire file download URL, I've created a bash script and website that should automatically redirect to the direct download URL.
 
 ## Bash Usage
-In the `0-bash-scripts` folder, you'll find 2 scripts. Both should be executed like the following:
-- URL: `./[script-name].sh https://www.mediafire.com/file/[download-identifier]/file`
-- Download Identifier: `./[script-name].sh [download-identifier]`
+In the `!-bash-script` folder, you'll find a script which is executed like the following:
+- URL: `./mediafire-direct.sh https://www.mediafire.com/file/[download-identifier]/file`
+- Download Identifier: `./mediafire-direct.sh [download-identifier]`
 
-The only difference between the scripts are `mediafire-direct.sh` only provides the direct download URL back for you to use on your own, while `mediafire-direct-dl.sh` actually downloads the file you asked for. Just make sure that you at least have either `wget` or `curl` installed for it to work.
+By default, the script will download the URL(s) you give it, if you want it to just show the resulting temporary direct links, execute the script like so:
+- E.g. `./mediafire-direct.sh -n [download-identifier]` OR `./mediafire-direct.sh --no-download [download-identifier]`
+
+If you want to download more than one file, you just need to add more links onto the end:
+- E.g. `./mediafire-direct.sh [download-identifier1] [download-identifier2] [download-identifier3] [download-identifier4]`
+
+The bash script requires `wget` or `curl` to be installed for it to work.
 
 ## Website Usage
 You can either go to the website, [Mediafire Direct Download](https://thealiendrew.github.io/mediafire-direct/), directly and enter the Mediafire link you want to direct download. Or you can prefix any format of the download link, or just use its download identifier like so:

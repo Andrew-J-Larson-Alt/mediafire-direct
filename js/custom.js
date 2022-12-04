@@ -18,7 +18,8 @@
 const corsProxy = 'https://api.allorigins.win/get?url=';
 const validMediafireIdentifierDL = /^[a-zA-Z0-9]+$/m;
 const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/m;
-const validMediafireLongDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_\-\.~%]+)?(\/file)?$/m;
+const validMediafireLongDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_~%\.\-]+)?(\/file)?$/m;
+const validDynamicDL = /(?<=['\"])https?:\/\/download[0-9]+\.mediafire\.com\/[^'\"]+(?=['\"])/;
 const checkHTTP = /^https?:\/\//m;
 const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
@@ -150,15 +151,9 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 
       // if we received a page
       if (html) {
-        // Convert the HTML string into a document object
-        let parser = new DOMParser();
-        let doc = parser.parseFromString(html, 'text/html');
-
-        // redirect to direct download if the download page was real (and not taken down)
-        let mfDlBtn = doc.getElementById('downloadButton');
-        if (mfDlBtn && mfDlBtn.href) {
-          let dlUrl = mfDlBtn.href;
-
+        // we try to find URL by regex matching
+        let dlUrl = html.match(validDynamicDL);
+        if (dlUrl) {
           console.log(`Downloading from "${dlUrl}"...`);
           // need to do correct download based on if we came from parameters
           if (fromParameters) downloadFileBegin(dlUrl);
