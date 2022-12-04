@@ -145,14 +145,13 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
     let mediafirePageResponse = await fetch(corsProxy+encodeURIComponent(url));
     
     // make sure the response was ok
-    if (mediafirePageResponse.ok) {
-      let data = await mediafirePageResponse.json();
-      let html = data.contents;
+    if (await mediafirePageResponse.ok) {
+      let data = await mediafirePageResponse.text();
 
       // if we received a page
-      if (html) {
+      if (data) {
         // we try to find URL by regex matching
-        let dlUrls = html.match(validDynamicDL);
+        let dlUrls = data.match(validDynamicDL);
 
         if (dlUrls.length >= 1) {
           let dlUrl = dlUrls[0];
