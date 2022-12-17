@@ -1,6 +1,6 @@
 {
-    "name": "Mediafire Direct DL",
-    "short_name": "Mediafire Direct DL",
+    "name": "Mediafire Direct Download",
+    "short_name": "Mediafire Direct Download",
     "icons": [
         {
             "src": "/icon/android-chrome-36x36.png",
@@ -50,6 +50,6 @@
     ],
     "theme_color": "#0077ff",
     "background_color": "#0077ff",
-    "start_url": "https://thealiendrew.github.io/mediafire-direct-dl/",
+    "start_url": "https://thealiendrew.github.io/mediafire-direct/",
     "display": "standalone"
 }
