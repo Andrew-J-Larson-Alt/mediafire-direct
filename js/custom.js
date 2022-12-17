@@ -21,6 +21,12 @@ const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0
 const validMediafireLongDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_~%\.\-]+)?(\/file)?$/m;
 const validDynamicDL = /(?<=['\"])https?:\/\/download[0-9]+\.mediafire\.com\/[^'\"]+(?=['\"])/;
 const checkHTTP = /^https?:\/\//m;
+const inputMediafireUrlID = 'mediafire-url';
+const containerNewUrlID = 'new-url';
+const spanMediafireNewUrlID = 'mediafire-new-url';
+const aMediafireDownloadBtnID = 'mediafire-dl-btn';
+const pInvalidUrlID = 'invalid-url';
+const pInvalidPageID = 'invalid-page';
 const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
 
@@ -113,12 +119,12 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
 
 var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
-  if (!url) url = document.getElementById('mediafire-url').value;
-  if (!containerNewUrl) containerNewUrl = document.getElementById('new-url');
-  if (!spanMediafireNewUrl) spanMediafireNewUrl = document.getElementById('mediafire-new-url');
-  if (!dlBtn) dlBtn = document.getElementById('mediafire-dl-btn');
-  if (!invalidUrlP) invalidUrlP = document.getElementById('invalid-url');
-  if (!invalidPageP) invalidPageP = document.getElementById('invalid-page');
+  if (!url) url = document.getElementById(inputMediafireUrlID).value;
+  if (!containerNewUrl) containerNewUrl = document.getElementById(containerNewUrlID);
+  if (!spanMediafireNewUrl) spanMediafireNewUrl = document.getElementById(spanMediafireNewUrlID);
+  if (!dlBtn) dlBtn = document.getElementById(aMediafireDownloadBtnID);
+  if (!invalidUrlP) invalidUrlP = document.getElementById(pInvalidUrlID);
+  if (!invalidPageP) invalidPageP = document.getElementById(pInvalidPageID);
 
   // reset previous invalid page notice
   if (!invalidPageP.classList.contains('hide')) invalidPageP.classList.add('hide');
@@ -180,12 +186,12 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
 window.addEventListener('load', function() {
   // Elements
 
-  let inputMediafireURL = document.getElementById('mediafire-url');
-  let containerNewUrl = document.getElementById('new-url');
-  let spanMediafireNewUrl = document.getElementById('mediafire-new-url');
-  let aMediafireDownloadBtn = document.getElementById('mediafire-dl-btn');
-  let pInvalidURL = document.getElementById('invalid-url');
-  let pInvalidPage = document.getElementById('invalid-page');
+  let inputMediafireUrl = document.getElementById(inputMediafireUrlID);
+  let containerNewUrl = document.getElementById(containerNewUrlID);
+  let spanMediafireNewUrl = document.getElementById(spanMediafireNewUrlID);
+  let aMediafireDownloadBtn = document.getElementById(aMediafireDownloadBtnID);
+  let pInvalidUrl = document.getElementById(pInvalidUrlID);
+  let pInvalidPage = document.getElementById(pInvalidPageID);
     
   // Main
 
@@ -193,19 +199,19 @@ window.addEventListener('load', function() {
   let paramURL = getQueryStringArray().dl;
   if (paramURL) {
     fromParameters = true;
-    inputMediafireURL.value = paramURL;
+    inputMediafireUrl.value = paramURL;
     console.log(`Validating "${paramURL}" as valid Mediafire download...`);
     // run checker once as is necessary
-    if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
-      attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
+    if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidUrl, containerNewUrl, spanMediafireNewUrl)) {
+      attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidUrl, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
     }
   }
 
   // detect any changes to url value
-  inputMediafireURL.oninput = function() {
+  inputMediafireUrl.oninput = function() {
     // needs to be captured before checking since it changes fast
-    let currentUrl = inputMediafireURL.value;
-    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl);
+    let currentUrl = inputMediafireUrl.value;
+    validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidUrl, containerNewUrl, spanMediafireNewUrl);
     previousUrlValue = currentUrl;
   }
 });
