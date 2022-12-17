@@ -44,7 +44,6 @@ var isBlink = (isChrome || isOpera) && !!window.CSS;
 
 let validateDelayCheck = null;
 let fromParameters = false;
-let previousUrlValue = '';
 
 // Functions
 
@@ -212,6 +211,5 @@ window.addEventListener('load', function() {
     // needs to be captured before checking since it changes fast
     let currentUrl = inputMediafireUrl.value;
     validationChecker(currentUrl, aMediafireDownloadBtn, pInvalidUrl, containerNewUrl, spanMediafireNewUrl);
-    previousUrlValue = currentUrl;
   }
 });
