@@ -92,25 +92,16 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   let validatedURL = validMediafireIdentifierDL.test(url) || validMediafireShortDL.test(url) || validMediafireLongDL.test(url);
 
   // Test if the new value is a valid link, to enable the download button
-  if (url) {
-    // check if we have valid url
-    if (validatedURL) {
-      if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
-      if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
-      spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?dl=' + url;
-      if (containedNewUrl.classList.contains('hide')) containedNewUrl.classList.remove('hide');
+  if (url && validatedURL) {
+    // we have a valid url
+    if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
+    if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+    spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?dl=' + url;
+    if (containedNewUrl.classList.contains('hide')) containedNewUrl.classList.remove('hide');
 
-      return true;
-    } else {
-      if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
-      if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
-      if (!containedNewUrl.classList.contains('hide')) containedNewUrl.classList.add('hide');
-      spanMfNewURL.innerText = '';
-
-      return false;
-    }
+    return true;
   } else {
-    // need to reset when no text is entered
+    // need to reset when url isn't valid or no text is entered
     if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
     if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
     if (!containedNewUrl.classList.contains('hide')) containedNewUrl.classList.add('hide');
@@ -204,10 +195,10 @@ window.addEventListener('load', function() {
     fromParameters = true;
     inputMediafireURL.value = paramURL;
     console.log(`Validating "${paramURL}" as valid Mediafire download...`);
-  }
-  // run checker once on after parameter check
-  if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
-    attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
+    // run checker once as is necessary
+    if (validationChecker(paramURL, aMediafireDownloadBtn, pInvalidURL, containerNewUrl, spanMediafireNewUrl)) {
+      attemptDownloadRedirect(paramURL, aMediafireDownloadBtn, pInvalidURL, pInvalidPage, containerNewUrl, spanMediafireNewUrl);
+    }
   }
 
   // detect any changes to url value
