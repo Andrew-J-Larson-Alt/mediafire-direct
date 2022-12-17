@@ -101,14 +101,14 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
     // we have a valid url
     if (dlBtn.classList.contains('disable')) dlBtn.classList.remove('disable');
     if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
-    spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?dl=' + url;
     if (containedNewUrl.classList.contains('hide')) containedNewUrl.classList.remove('hide');
+    spanMfNewURL.innerText = window.location.origin + window.location.pathname + '?dl=' + url;
 
     return true;
   } else {
     // need to reset when url isn't valid or no text is entered
     if (!dlBtn.classList.contains('disable')) dlBtn.classList.add('disable');
-    if (!pInvalid.classList.contains('hide')) pInvalid.classList.add('hide');
+    if (pInvalid.classList.contains('hide')) pInvalid.classList.remove('hide');
     if (!containedNewUrl.classList.contains('hide')) containedNewUrl.classList.add('hide');
     spanMfNewURL.innerText = '';
 
