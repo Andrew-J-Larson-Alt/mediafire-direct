@@ -51,7 +51,7 @@ var getQueryStringArray = function() {
   let assoc=[];
   let items = window.location.search.substring(1).split('&');
   for(let j = 0; j < items.length; j++) {
-    let a = items[j].split('='); assoc[a[0]] = a[1];
+    let a = items[j].split('='); assoc[a[0]] = decodeURIComponent(a[1]);
   }
   return assoc;
 };
