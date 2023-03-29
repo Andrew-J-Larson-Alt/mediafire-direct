@@ -17,7 +17,7 @@
 
 const corsProxy = 'https://corsproxy.io/?';
 const validMediafireIdentifierDL = /^[a-zA-Z0-9]+$/m;
-const validMediafireShortDL = /^(https?:\/\/)?(\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/m;
+const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/m;
 const validMediafireLongDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_~%\.\-]+)?(\/file)?$/m;
 const validMediafirePreDL = /(?<=['\"])(https?:)?(\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[^'\"\?]+\?dkey\=[^'\"]+(?=['\"])/;
 const validDynamicDL = /(?<=['\"])https?:\/\/download[0-9]+\.mediafire\.com\/[^'\"]+(?=['\"])/;
