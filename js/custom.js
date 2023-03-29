@@ -30,6 +30,7 @@ const pInvalidUrlID = 'invalid-url';
 const pInvalidPageID = 'invalid-page';
 const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
+const paramDL_mediafireWebDelay = 1000; // ms; Mediafire's specified delay to redirect to parametered download URLs
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
@@ -134,7 +135,10 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
   // if it's just the download identifier, add on mediafire pre-link
   if (validMediafireIdentifierDL.test(url)) url = 'https://mediafire.com/?' + url;
   // if the link doesn't have http(s), it needs to be appended
-  if (!checkHTTP.test(url)) url = 'https://' + url;
+  if (!checkHTTP.test(url)) {
+    if (url.startsWith('//')) url = 'https:' + url;
+    else url = 'https://' + url;
+  };
 
   console.log(`Checking "${url}" for valid download page...`);
   // try and get the mediafire page to get actual download link
@@ -151,7 +155,9 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         let dlPreUrls = data.match(validMediafirePreDL);
         if (dlPreUrls) {
           let dlPreUrl = dlPreUrls[0];
-          return attemptDownloadRedirect(dlPreUrl, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl);
+          return setTimeout(function() {
+            return attemptDownloadRedirect(dlPreUrl, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl);
+          }, paramDL_mediafireWebDelay); // delay is required, or else Mediafire's Cloudflare protection will not connect
         }
 
         // we try to find URL by regex matching
