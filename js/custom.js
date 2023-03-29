@@ -118,6 +118,7 @@ var validationChecker = function(url, dlBtn, pInvalid, containedNewUrl, spanMfNe
   }
 };
 
+// if successful, trys to download file and returns the temporary direct download link as a string
 var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl) {
   // in case we are running from the download button
   if (!url) url = document.getElementById(inputMediafireUrlID).value;
@@ -170,7 +171,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           if (fromParameters) downloadFileBegin(dlUrl);
           else downloadFile(dlUrl);
 
-          return true;
+          return dlUrl;
         }
       }
     }
