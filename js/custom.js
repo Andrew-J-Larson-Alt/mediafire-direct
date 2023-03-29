@@ -160,7 +160,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           else downloadFile(dlUrl);
 
           return true;
-        } else
+        }
       }
     }
 
