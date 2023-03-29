@@ -17,9 +17,10 @@
 
 const corsProxy = 'https://corsproxy.io/?';
 const validMediafireIdentifierDL = /^[a-zA-Z0-9]+$/m;
-const validMediafireShortDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/m;
+const validMediafireShortDL = /^(https?:\/\/)?(\/\/)?(www\.)?mediafire\.com\/\?[a-zA-Z0-9]+$/m;
 const validMediafireLongDL = /^(https?:\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[a-zA-Z0-9]+(\/[a-zA-Z0-9_~%\.\-]+)?(\/file)?$/m;
 const validDynamicDL = /(?<=['\"])https?:\/\/download[0-9]+\.mediafire\.com\/[^'\"]+(?=['\"])/;
+const validAltDynamicDL = /(?<=['\"])(https?:)?(\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[^'\"\?]+\?dkey\=[^'\"]+(?=['\"])/;
 const checkHTTP = /^https?:\/\//m;
 const inputMediafireUrlID = 'mediafire-url';
 const containerNewUrlID = 'new-url';
@@ -148,8 +149,9 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
       if (data) {
         // we try to find URL by regex matching
         let dlUrls = data.match(validDynamicDL);
+        if (!dlUrls) data.match(validAltDynamicDL);
 
-        if (dlUrls && dlUrls.length >= 1) {
+        if (dlUrls) {
           let dlUrl = dlUrls[0];
 
           console.log(`Downloading from "${dlUrl}"...`);
@@ -158,7 +160,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           else downloadFile(dlUrl);
 
           return true;
-        } else console.log(dlUrls) // testing!
+        } else
       }
     }
 
