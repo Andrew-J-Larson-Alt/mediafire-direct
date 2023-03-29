@@ -149,7 +149,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         // we try to find URL by regex matching
         let dlUrls = data.match(validDynamicDL);
 
-        if (dlUrls.length >= 1) {
+        if (dlUrls && dlUrls.length >= 1) {
           let dlUrl = dlUrls[0];
 
           console.log(`Downloading from "${dlUrl}"...`);
@@ -158,7 +158,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
           else downloadFile(dlUrl);
 
           return true;
-        }
+        } else console.log(dlUrls) // testing!
       }
     }
 
