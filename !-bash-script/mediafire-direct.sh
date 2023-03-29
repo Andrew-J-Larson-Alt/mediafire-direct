@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # for matching the parameter download URLs
-MEDIAFIRE_WEB_DELAY=1000 # ms; Mediafire's specified delay to redirect to parametered download URLs
+MEDIAFIRE_WEB_DELAY=1 # s; Mediafire's specified delay to redirect to parametered download URLs
 VALID_MEDIAFIRE_PRE_DL="(?<=['\"])(https?:)?(\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[^'\"\?]+\?dkey\=[^'\"]+(?=['\"])"
 
 # for matching the dynamic download URLs
@@ -115,6 +115,7 @@ for url in "${URLS[@]}"; do
     elif [ $curl -eq 0 ]; then
       dlUrl=$(curl -sL "$url" | grep -oP "${VALID_DYNAMIC_DL}" | head -n 1)
     fi
+    sleep $MEDIAFIRE_WEB_DELAY
   fi # error is handled below
 
   # only continue if URL has an available download
