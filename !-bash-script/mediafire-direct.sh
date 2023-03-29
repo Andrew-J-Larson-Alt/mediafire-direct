@@ -29,6 +29,10 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+# for matching the parameter download URLs
+MEDIAFIRE_WEB_DELAY=1000 # ms; Mediafire's specified delay to redirect to parametered download URLs
+VALID_MEDIAFIRE_PRE_DL="(?<=['\"])(https?:)?(\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[^'\"\?]+\?dkey\=[^'\"]+(?=['\"])"
+
 # for matching the dynamic download URLs
 VALID_DYNAMIC_DL="(?<=['\"])https?:\/\/download[0-9]+\.mediafire\.com\/[^'\"]+(?=['\"])"
 
@@ -83,17 +87,35 @@ for url in "${URLS[@]}"; do
     # might want need to replace http:// with https://
     url="${url//http:\/\//https:\/\/}"
   elif [ -z "$(echo "$url" | grep '^https:\/\/')" ]; then
-    # needs https:// added on
-    url="https://$url"
+    # if the link doesn't have http(s), it needs to be appended
+    if [ ! -z "$(echo "$url" | grep '^\/\/')" ]; then
+      url="https:$url"
+    else
+      url="https://$url"
+    fi
   fi
 
   # use wget, otherwise, use curl
+  dlPreUrl=""
   dlUrl=""
   if [ $wget -eq 0 ]; then
+    dlPreUrl=$(wget -qO - "$url" > /dev/stdout | grep -oP "${VALID_MEDIAFIRE_PRE_DL}" | head -n 1)
     dlUrl=$(wget -qO - "$url" > /dev/stdout | grep -oP "${VALID_DYNAMIC_DL}" | head -n 1)
   elif [ $curl -eq 0 ]; then
+    dlPreUrl=$(curl -sL "$url" | grep -oP "${VALID_MEDIAFIRE_PRE_DL}" | head -n 1)
     dlUrl=$(curl -sL "$url" | grep -oP "${VALID_DYNAMIC_DL}" | head -n 1)
   fi
+
+  # check if download parameter link was instead used on website
+  if [ ! -z "$dlPreUrl" ]; then
+    url="$dlPreUrl"
+    # must recheck for correct download URL
+    if [ $wget -eq 0 ]; then
+      dlUrl=$(wget -qO - "$url" > /dev/stdout | grep -oP "${VALID_DYNAMIC_DL}" | head -n 1)
+    elif [ $curl -eq 0 ]; then
+      dlUrl=$(curl -sL "$url" | grep -oP "${VALID_DYNAMIC_DL}" | head -n 1)
+    fi
+  fi # error is handled below
 
   # only continue if URL has an available download
   if [ -z "$dlUrl" ]; then
