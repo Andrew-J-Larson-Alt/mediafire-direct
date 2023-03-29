@@ -151,7 +151,7 @@ var attemptDownloadRedirect = async function(url, dlBtn, invalidUrlP, invalidPag
         let dlPreUrls = data.match(validMediafirePreDL);
         if (dlPreUrls) {
           let dlPreUrl = dlPreUrls[0];
-          return attemptDownloadRedirect(url, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl);
+          return attemptDownloadRedirect(dlPreUrl, dlBtn, invalidUrlP, invalidPageP, containerNewUrl, spanMediafireNewUrl);
         }
 
         // we try to find URL by regex matching
