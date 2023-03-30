@@ -1,5 +1,3 @@
-// Constants
-
 /* Copyright (C) 2023  Andrew Larson (thealiendrew@gmail.com)
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +12,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+
+// Constants
 
 const corsProxy = 'https://corsproxy.io/?';
 const validMediafireIdentifierDL = /^[a-zA-Z0-9]+$/m;
@@ -30,7 +30,7 @@ const pInvalidUrlID = 'invalid-url';
 const pInvalidPageID = 'invalid-page';
 const paramDL_initialDelay = 50; // ms
 const paramDL_loadDelay = 750; // ms
-const paramDL_mediafireWebDelay = 1000; // ms; Mediafire's specified delay to redirect to parametered download URLs
+const paramDL_mediafireWebDelay = 1500; // ms; Mediafire's specified delay is 1000ms to redirect to parametered download URLs, and needs another 500ms to time things properly
 
 // Browser Detection Variables
 var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
