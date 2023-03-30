@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # for matching the parameter download URLs
-MEDIAFIRE_WEB_DELAY=1 # s; Mediafire's specified delay to redirect to parametered download URLs
+MEDIAFIRE_WEB_DELAY=1.5 # s; Mediafire's specified delay is 1s to redirect to parametered download URLs, and needs another .5s to time things properly
 VALID_MEDIAFIRE_PRE_DL="(?<=['\"])(https?:)?(\/\/)?(www\.)?mediafire\.com\/(file|view|download)\/[^'\"\?]+\?dkey\=[^'\"]+(?=['\"])"
 
 # for matching the dynamic download URLs
