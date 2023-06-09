@@ -1,6 +1,8 @@
 # mediafire-direct
 Using a normal Mediafire file download URL, I've created a bash script and website that should automatically redirect to the direct download URL.
 
+## NOTE: No longer being updated/hosted... I should have suspected this, but I guess bad actors have been using this to redirect people to malware from my GitHub.io website. Shame, can't have nice things I guess.
+
 ## Bash Usage
 In the `!-bash-script` folder, you'll find a script which is executed like the following:
 - URL: `./mediafire-direct.sh https://www.mediafire.com/file/[download-identifier]/file`
