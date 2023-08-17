@@ -17,9 +17,9 @@ If you want to download more than one file, you just need to add more links onto
 The bash script requires `wget` or `curl` to be installed for it to work.
 
 ## Website Usage
-You can either go to the website, [Mediafire Direct Download](https://thealiendrew.github.io/mediafire-direct/), directly and enter the Mediafire link you want to direct download. Or you can prefix any format of the download link, or just use its download identifier like so:
+You can either go to the website, [Mediafire Direct Download](https://andrew-j-larson.github.io/mediafire-direct/), directly and enter the Mediafire link you want to direct download. Or you can prefix any format of the download link, or just use its download identifier like so:
 
-- URL: `https://thealiendrew.github.io/mediafire-direct/?dl=https://www.mediafire.com/file/[download-identifier]/file`
-- Download Identifier: `https://thealiendrew.github.io/mediafire-direct/?dl=[download-identifier]`
+- URL: `https://andrew-j-larson.github.io/mediafire-direct/?dl=https://www.mediafire.com/file/[download-identifier]/file`
+- Download Identifier: `https://andrew-j-larson.github.io/mediafire-direct/?dl=[download-identifier]`
 
-![Preview](https://github.com/TheAlienDrew/mediafire-direct/blob/main/img/readme/preview.png)
+![Preview](https://github.com/Andrew-J-Larson-Alt/mediafire-direct/blob/main/img/readme/preview.png)
